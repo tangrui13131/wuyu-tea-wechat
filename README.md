@@ -8,19 +8,22 @@
 
 ## 快速开始
 
-**⚠️ 本仓库不含 `dist/`（构建产物已 gitignore）。微信开发者工具打开报 `dist/app.json 未找到` 就是还没构建，按下面三步走。**
+### 只想跑起来看效果（不需要 Node）
+
+**本仓库已包含构建好的 `dist/`。** 下载 ZIP 解压后：
+
+> 微信开发者工具 → 导入项目 → 目录选**解压出来的仓库根目录**（不是 `dist/` 子目录）→ 填自己的 AppID 或选「测试号」→ 导入
+
+`project.config.json` 里 `miniprogramRoot` 已经是 `dist/`，工具会自动去读它，**不需要装 Node、不需要构建**。
+
+### 要改代码
+
+改完源码必须重新构建，否则工具里看到的还是旧产物：
 
 ```bash
-# 1. 安装依赖（Node ≥ 18，实测 v24）
-npm install
-
-# 2. 构建小程序产物到 dist/
-npm run build:weapp
-
-# 3. 微信开发者工具 → 导入项目 → 选择本仓库根目录（不是 dist/）
+npm install          # 首次，Node ≥ 18（实测 v24）
+npm run build:weapp  # 编译到 dist/（约 25 秒）
 ```
-
-`project.config.json` 里 `miniprogramRoot` 已经是 `dist/`，所以**导入根目录即可**，工具会自动去读 `dist/`。
 
 开发时用 watch 模式，改完源码在开发者工具里点「编译」：
 
@@ -28,11 +31,13 @@ npm run build:weapp
 npm run dev:weapp
 ```
 
+> ⚠️ 提交代码前请先 `npm run build:weapp`，让 `dist/` 和源码保持同步，否则队友拉下来的产物会比你改的旧。
+
 ## 其他命令
 
 | 命令 | 作用 |
 | --- | --- |
-| `npm run build:weapp` | 生产构建 → `dist/`（约 6-8 秒，1.8 MB） |
+| `npm run build:weapp` | 生产构建 → `dist/`（约 25 秒，1.8 MB） |
 | `npm run dev:weapp` | 监听构建 → `dist/` |
 | `npm run build:h5` | H5 构建（**会清空小程序 `dist/`，请改用下方隔离写法**） |
 | `TARO_OUTPUT_DIR=dist_h5 npm run build:h5` | 构建 H5 到独立目录，不污染 `dist/` |
