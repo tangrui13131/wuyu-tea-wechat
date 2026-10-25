@@ -2,8 +2,8 @@
 node_modules/
 .pnpm-store/
 
-# 构建产物（由 npm run build:weapp 生成，微信开发者工具导入 dist/）
-dist/
+# 构建产物：dist/ 是刻意提交进仓库的（队友没有 Node 环境也能直接导入微信开发者工具），
+# 改完源码务必先 `npm run build:weapp` 再提交，否则仓库里的产物会比源码旧。
 dist_verify/
 dist_h5/
 .swc/
