@@ -186,7 +186,8 @@ data/*.ts 本地 mock → 页面照常渲染
 18. **拼 SVG 路径时要包 `<path>`**：`MOTIF_PATHS[name].join('')` 直接把 `d` 串拼进 `<svg>` 会得到一个「能加载、能 new Image、但不画任何东西」的图（300×40、`load` 事件正常）。必须 `.map(d => '<path d="' + d + '"/>').join('')`。
 
 19. **wxss 的 `background-image` 不支持本地相对路径**：小程序只认网络图或 base64，写 `background-image: url('./hero.jpg')` 在真机上就是不显示（开发者工具模拟器有时能显示，容易误判）。要铺本地位图一律用绝对定位的 `<Image mode="aspectFill">` 当底图层，内容层抬 `z-index`（见 §5「hero 底图」）。
-20. **`@include button-reset` 会把写在它前面的 `margin` 全部清零**：该 mixin 内有 `margin: 0`（用于清掉微信 button 默认的 `margin-left/right: auto`），SCSS 按书写顺序展开，所以 `.x { margin-top: 24rpx; @include button-reset; }` 最终是 **margin-top: 0**。症状是「应该分开的按钮完全贴在一起」，且编译不报错、样式表里看不出异常。规则：**margin 一律写在 `@include button-reset` 之后**。2026-10 已按此修掉 11 处历史 call site（report / shop / route-detail / npc / study-booking / study-task）。
+20. **项目一度有两个 app 入口：`src/app.ts` 和 `src/app.tsx`，webpack 只取 `.ts`**：`.ts` 优先于 `.tsx`，而真正带登录、`useDidShow` 埋点的逻辑全在 `src/app.tsx` 里 —— 结果 `src/app.ts` 被静默选用，`app.tsx` **从未执行过任何一行**（表现为启动不登录、`Request 都没有 x-openid`，且构建不报错、TS 也不报错，因为两份都合法）。2026-10 删掉了 `src/app.ts` 这个空壳。**教训：Taro 项目里 `app.*` 只允许有一个扩展名**，`.tsx` 与 `.ts` 并存是最难发现的一类「逻辑没跑」。
+21. **`@include button-reset` 会把写在它前面的 `margin` 全部清零**：该 mixin 内有 `margin: 0`（用于清掉微信 button 默认的 `margin-left/right: auto`），SCSS 按书写顺序展开，所以 `.x { margin-top: 24rpx; @include button-reset; }` 最终是 **margin-top: 0**。症状是「应该分开的按钮完全贴在一起」，且编译不报错、样式表里看不出异常。规则：**margin 一律写在 `@include button-reset` 之后**。2026-10 已按此修掉 11 处历史 call site（report / shop / route-detail / npc / study-booking / study-task）。
 
 ## 9. 安全红线（硬规则）
 

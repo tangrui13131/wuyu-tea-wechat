@@ -32,8 +32,10 @@ export async function login(): Promise<{ openid: string; userId?: number }> {
             method: 'POST',
             data: { code: loginRes.code, openid: getOpenId() },
             header: { 'content-type': 'application/json' },
-            // 必须显式给超时：不写时小程序的默认值是 60s，后端没起时会挂着一分钟
-            timeout: API_CONFIG.timeout
+            // 必须显式给超时：不写时小程序的默认值是 60s，后端没起时会挂着一分钟。
+            // 登录只负责拿 token，拿不到也能用本地身份继续跑，所以压到 2s，
+            // 别让首屏为一个可选的身份请求干等。
+            timeout: Math.min(API_CONFIG.timeout, 2000)
         })
         const body = res.data as any
         if (body && body.code === 0 && body.data?.openid) {

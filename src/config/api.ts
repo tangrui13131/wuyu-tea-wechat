@@ -9,8 +9,9 @@ export const API_CONFIG = {
     baseURL: 'http://127.0.0.1:3001',
     // 真机调试时改成电脑局域网 IP，例如：
     // baseURL: 'http://192.168.1.100:3001',
-    // 6s：本机没有后端时，降级到 mock 要快（原来是 15s，演示时首页会干等十几秒）
-    timeout: 6000,
+    // 3s：没有后端时首屏要等满超时才降级到 mock，6s 明显发卡。
+    // 配合 utils/request.ts 的熔断（一次失败后 30s 内不再发请求），只有第一屏付一次代价。
+    timeout: 3000,
     /** 接口不可用时是否自动降级到本地 mock 数据（保证演示不白屏） */
     fallbackToMock: true
 }
