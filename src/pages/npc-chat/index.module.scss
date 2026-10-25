@@ -1,0 +1,240 @@
+@use '@/styles/variables.scss' as *;
+
+.npcChatPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    @include paper-surface;
+}
+
+.chatContainer {
+    flex: 1;
+    padding: $spacing-lg $page-padding;
+    overflow-y: auto;
+}
+
+.messageRow {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: $spacing-lg;
+    gap: $spacing-sm;
+
+    &.messageRowNPC {
+        flex-direction: row;
+    }
+
+    &.messageRowUser {
+        flex-direction: row-reverse;
+    }
+
+    .npcAvatar {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: $radius-round;
+        border: 2rpx solid $color-border;
+        flex-shrink: 0;
+    }
+
+    .userAvatarPlaceholder {
+        width: 80rpx;
+        height: 80rpx;
+        flex-shrink: 0;
+    }
+}
+
+.messageBubble {
+    max-width: 70%;
+    padding: $spacing-md;
+    border-radius: $radius-lg;
+    position: relative;
+
+    &.messageBubbleNPC {
+        background-color: $color-bg-card;
+        border: 1rpx solid $color-border;
+        border-top-left-radius: $radius-xs;
+
+        .messageContent {
+            font-size: $font-size-md;
+            color: $color-text-primary;
+            line-height: $line-height-loose;
+        }
+    }
+
+    &.messageBubbleUser {
+        background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+        border-top-right-radius: $radius-xs;
+
+        .messageContent {
+            font-size: $font-size-md;
+            color: $color-text-white;
+            line-height: $line-height-loose;
+        }
+    }
+}
+
+.typingIndicator {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    font-style: italic;
+    padding: $spacing-sm 0;
+}
+
+.quickRepliesContainer {
+    padding: $spacing-md $page-padding;
+    background-color: $color-bg-card;
+    border-top: 1rpx solid $color-border;
+}
+
+.quickRepliesScroll {
+    white-space: nowrap;
+}
+
+.quickReplyBtn {
+    display: inline-block;
+    padding: $spacing-sm $spacing-lg;
+    margin-right: $spacing-sm;
+    background-color: $color-bg-section;
+    border-radius: $radius-button;
+    cursor: pointer;
+    transition: all $transition-base;
+
+    &:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+
+    .quickReplyText {
+        font-size: $font-size-sm;
+        color: $color-primary-dark;
+        white-space: nowrap;
+    }
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    padding: $spacing-md $page-padding;
+    background-color: $color-bg-card;
+    border-top: 1rpx solid $color-border;
+    gap: $spacing-sm;
+
+    .input {
+        flex: 1;
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-bg-section;
+        border-radius: $radius-button;
+        font-size: $font-size-md;
+        border: none;
+        outline: none;
+    }
+
+    .sendBtn {
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $radius-button;
+        @include button-reset;
+        @include paper-btn-sage;
+
+        &.sendBtnDisabled {
+            opacity: 0.5;
+        }
+
+        .sendBtnText {
+            font-size: $font-size-md;
+            color: $color-text-white;
+            font-weight: $font-weight-medium;
+        }
+    }
+}
+
+.moreMenuOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: $z-modal;
+    display: flex;
+    align-items: flex-end;
+}
+
+.moreMenu {
+    width: 100%;
+    background-color: $color-bg-card;
+    border-radius: $radius-xl $radius-xl 0 0;
+    padding: $spacing-lg;
+
+    .menuItem {
+        padding: $spacing-lg 0;
+        border-bottom: 1rpx solid $color-border;
+        text-align: center;
+        font-size: $font-size-lg;
+        color: $color-text-primary;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:active {
+            background-color: $color-bg-hover;
+        }
+    }
+}
+.stageBar {
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-primary, 0.10);
+    border-radius: $radius-sm;
+    margin: $spacing-sm $spacing-md;
+}
+
+.stageText {
+    font-size: $font-size-xs;
+    color: $color-primary-dark;
+    line-height: $line-height-normal;
+}
+
+// ---------- 语音播报开关 ----------
+.voiceBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm $spacing-lg;
+    background: $color-bg-section;
+    border-bottom: 1rpx solid $color-border-light;
+}
+
+.voiceBarLabel {
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+}
+
+.voiceSwitch {
+    width: 88rpx;
+    height: 48rpx;
+    border-radius: $radius-round;
+    background: $color-text-disabled;
+    position: relative;
+    transition: background 0.25s;
+}
+
+.voiceSwitchOn {
+    background: $color-primary;
+}
+
+.voiceKnob {
+    position: absolute;
+    top: 4rpx;
+    left: 4rpx;
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: $radius-round;
+    background: $color-text-white;
+    transition: left 0.25s;
+}
+
+.voiceKnobOn {
+    left: 44rpx;
+}

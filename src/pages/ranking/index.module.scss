@@ -1,0 +1,182 @@
+@use '@/styles/variables.scss' as *;
+
+.rankingPage {
+    padding: $spacing-lg $page-padding $spacing-xl;
+    min-height: 100vh;
+    @include paper-surface;
+}
+
+.header {
+    padding: $spacing-lg 0;
+}
+
+.headerTitle {
+    display: block;
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+}
+
+.headerSub {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+}
+
+.tabBar {
+    display: flex;
+    background-color: $color-bg-section;
+    border-radius: $radius-button;
+    padding: 6rpx;
+    margin-bottom: $spacing-md;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: $spacing-sm 0;
+    border-radius: $radius-button;
+    transition: all $transition-base;
+
+    &.tabActive {
+        background: $color-text-white;
+    }
+}
+
+.tabText {
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    font-weight: $font-weight-medium;
+
+    .tabActive & {
+        color: $color-primary;
+    }
+}
+
+.summaryBar {
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-primary, 0.1);
+    border-radius: $radius-sm;
+    margin-bottom: $spacing-md;
+}
+
+.summaryText {
+    font-size: $font-size-sm;
+    color: $color-primary-dark;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+}
+
+.rankItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+
+    &.rankItemCurrent {
+        border: 2rpx solid $color-accent;
+    }
+}
+
+.rankLeft {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+}
+
+.rankNo {
+    flex-shrink: 0;
+    width: 44rpx;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-tertiary;
+    text-align: center;
+
+    &.rankNoTop {
+        font-size: 40rpx;
+        color: $color-primary;
+    }
+}
+
+.rankAvatar {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: $radius-circle;
+    @include flex-center;
+    margin: 0 $spacing-xs;
+    flex-shrink: 0;
+}
+
+.rankAvatarText {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    color: $color-text-white;
+}
+
+.rankInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.rankName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    @include text-ellipsis;
+}
+
+.rankMeta {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: 2rpx;
+}
+
+.rankRight {
+    flex-shrink: 0;
+    width: 150rpx;
+    margin-left: $spacing-sm;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.scoreBarWrap {
+    width: 100%;
+    height: 12rpx;
+    background: $color-bg-section;
+    border-radius: 6rpx;
+    overflow: hidden;
+    margin-bottom: 6rpx;
+}
+
+.scoreBar {
+    height: 100%;
+    border-radius: 6rpx;
+    transition: width $transition-base;
+}
+
+.scoreText {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    font-weight: $font-weight-medium;
+}
+
+.footTip {
+    margin-top: $spacing-lg;
+    padding: $spacing-md;
+}
+
+.footTipText {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    line-height: 1.6;
+}

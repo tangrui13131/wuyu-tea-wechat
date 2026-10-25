@@ -1,0 +1,714 @@
+@use '@/styles/variables.scss' as *;
+
+.qualityPage {
+    padding: $spacing-lg $page-padding;
+}
+
+/* 页头（2026-10 审美升级）：金描边小签 + 宋体大标题 + 内联金线副题。
+   flex 纵向容器让子元素收缩为内容宽，Text 作为 flex 项后是块级盒，
+   金签的 margin-bottom 才会生效（inline 元素的纵向 margin 不生效） */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: $spacing-xl;
+    padding: $spacing-lg 0 0;
+
+    .headerTag {
+        font-family: $font-family-seal;
+        font-size: $font-size-xs; // 设计稿 11px
+        letter-spacing: 4rpx;
+        color: $quality-gold;
+        border: 2rpx solid rgba($quality-gold, 0.35);
+        padding: 4rpx 16rpx;
+        border-radius: $radius-xs;
+        background: rgba(255, 255, 255, 0.4);
+        margin-bottom: $spacing-sm; // 设计稿 8px
+    }
+
+    /* 复用 masthead-title：无底色宣纸页头是全站约定；标题按设计稿用宋体定调 */
+    .headerTitle {
+        @include masthead-title(56rpx); // 设计稿 28px → 56rpx，字号与 $font-size-display 同档
+        font-family: $font-family-seal;
+        font-weight: $font-weight-bold; // 设计稿 700，盖过 mixin 的 semibold
+    }
+
+    .subtitleRow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: $spacing-sm;
+
+        .subtitleLine {
+            width: 56rpx; // 设计稿 28px
+            height: 4rpx; // 设计稿 2px，比 masthead-rule 的 3rpx 略粗
+            background: $quality-gold;
+            opacity: 0.7;
+            margin-right: 20rpx; // 设计稿 gap 10px
+            flex-shrink: 0;
+        }
+
+        .subtitleText {
+            font-size: $font-size-sm;
+            color: $color-text-secondary;
+            letter-spacing: 1rpx;
+        }
+    }
+}
+
+.section {
+    margin-bottom: $spacing-xxl;
+
+    .sectionTitle {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-md;
+    }
+}
+
+/* ===== 地理参数区（2026-10 审美升级：设计稿「地理参数 - 槎山白茶审美升级」）
+   结构：模块标题（宋体 + 英文副题）→ 地理主卡（等高线水印 / 产茶带小标题 /
+   经纬罗盘通栏 / 四宫格风物 / 底部按语）。weapp 无内联 SVG，水印走 data-URI 背景。 */
+.moduleHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 4rpx;
+    margin-bottom: 28rpx;
+}
+
+.moduleTitle {
+    font-family: $font-family-seal;
+    font-size: 40rpx;
+    font-weight: $font-weight-bold;
+    letter-spacing: 2rpx;
+    color: $color-text-primary;
+}
+
+.moduleEn {
+    font-family: $font-family-seal;
+    font-size: 22rpx;
+    letter-spacing: 4rpx;
+    color: $color-text-tertiary;
+}
+
+.geoBoard {
+    position: relative;
+    background: $quality-geo-board;
+    border-radius: 36rpx;
+    padding: 44rpx 40rpx;
+    overflow: hidden;
+    box-shadow: $quality-geo-shadow-board;
+    margin-bottom: $spacing-lg;
+}
+
+/* 右上等高线暗纹：stroke 取 currentColor → 经 color 固化成 #3F6148，
+   SVG 属性单引号、外层双引号、# 写 %23（已知坑 §8-17） */
+.topoWatermark {
+    position: absolute;
+    top: -40rpx;
+    right: -40rpx;
+    width: 360rpx;
+    height: 360rpx;
+    opacity: 0.06;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%233f6148' stroke-width='1.5'><path d='M20,180 C60,120 140,140 190,60'/><path d='M40,190 C80,140 150,155 195,90'/><path d='M0,150 C50,90 120,110 180,20'/><circle cx='130' cy='80' r='35' stroke-dasharray='3 3'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.beltHeader {
+    position: relative;
+    z-index: $z-base;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32rpx;
+}
+
+.beltTitleWrap {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+}
+
+/* 设计稿用 ::before 画产茶带竖条；weapp 伪元素不稳，用真元素（同 highlightFrame 先例） */
+.beltBar {
+    width: 6rpx;
+    height: 32rpx;
+    background: $quality-geo-green;
+    border-radius: 4rpx;
+    flex-shrink: 0;
+}
+
+.beltTitle {
+    font-family: $font-family-seal;
+    font-size: 34rpx;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1.6rpx;
+    color: $color-text-primary;
+}
+
+.beltBadge {
+    font-family: $font-family-seal;
+    font-size: 22rpx;
+    letter-spacing: 2rpx;
+    color: $quality-gold;
+    background: rgba($quality-gold, 0.08);
+    border: 2rpx solid rgba($quality-gold, 0.28);
+    padding: 4rpx 16rpx;
+    border-radius: 8rpx;
+    flex-shrink: 0;
+    margin-left: 16rpx;
+}
+
+.coordBanner {
+    position: relative;
+    z-index: $z-base;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: $quality-geo-coord;
+    border: 2rpx solid rgba($quality-geo-green, 0.16);
+    border-radius: 24rpx;
+    padding: 28rpx 36rpx;
+    margin-bottom: 24rpx;
+    box-shadow: inset 0 2rpx 0 rgba(255, 255, 255, 0.7);
+}
+
+.coordItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+
+    &.alignRight {
+        align-items: flex-end;
+    }
+}
+
+.coordLabel {
+    font-size: 23rpx;
+    letter-spacing: 1rpx;
+    color: $color-text-secondary;
+}
+
+.coordValue {
+    font-family: $font-family-seal;
+    font-size: 38rpx;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1rpx;
+    color: $quality-geo-green;
+}
+
+.coordDir {
+    font-size: 26rpx;
+    font-weight: $font-weight-semibold;
+    margin-right: 6rpx;
+    opacity: 0.85;
+}
+
+.coordDivider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24rpx;
+    opacity: 0.4;
+}
+
+.paramGrid {
+    position: relative;
+    z-index: $z-base;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24rpx;
+    margin-bottom: 36rpx;
+}
+
+.paramCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 188rpx;
+    background: $quality-geo-cell;
+    border-radius: 24rpx;
+    padding: 30rpx 32rpx;
+    overflow: hidden;
+    box-shadow: $quality-geo-shadow-cell;
+}
+
+.paramTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20rpx;
+}
+
+.paramLabel {
+    font-size: 25rpx;
+    letter-spacing: 1rpx;
+    color: $color-text-secondary;
+}
+
+.paramBottom {
+    display: flex;
+    align-items: baseline;
+    gap: 8rpx;
+}
+
+.paramNum {
+    font-family: $font-family-seal;
+    font-size: 42rpx;
+    font-weight: $font-weight-bold;
+    line-height: 1.1;
+    color: $quality-geo-green;
+}
+
+.paramUnit {
+    font-family: $font-family-seal;
+    font-size: 26rpx;
+    font-weight: $font-weight-semibold;
+    color: $quality-geo-green;
+    opacity: 0.8;
+}
+
+/* 文字型指标（土壤）：不拆数字 + 单位，整段走大字 */
+.paramTextVal {
+    font-family: $font-family-seal;
+    font-size: 35rpx;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1rpx;
+    line-height: 1.2;
+    color: $quality-geo-green;
+}
+
+.geoSummary {
+    position: relative;
+    z-index: $z-base;
+    background: rgba($quality-geo-note, 0.55);
+    border-left: 6rpx solid $quality-gold;
+    border-radius: 20rpx;
+    padding: 28rpx 32rpx;
+    box-shadow: inset 0 2rpx 4rpx rgba($quality-ink, 0.05);
+}
+
+.summaryText {
+    font-size: 27rpx;
+    line-height: 1.75;
+    letter-spacing: 0.8rpx;
+    color: $color-text-secondary;
+    text-align: justify;
+}
+
+.summaryHighlight {
+    color: $color-text-primary;
+    font-weight: $font-weight-medium;
+    border-bottom: 2rpx dotted $quality-gold;
+    padding-bottom: 2rpx;
+}
+
+/* 核心亮点（2026-10 审美升级）：卡纸 + 金色细线内框 + 右下「鲜」字水印，
+   徽章 + 印章标签 + 数字胶囊。内框用真元素而非 ::before——
+   weapp 对 text/view 的伪元素支持不稳定，真元素跨端一致 */
+.highlightCard {
+    position: relative;
+    padding: 44rpx 44rpx 40rpx; // 设计稿 22px 22px 20px
+    background: $quality-paper;
+    border-radius: 28rpx; // 设计稿 14px
+    margin-bottom: 64rpx; // 设计稿 32px
+    overflow: hidden;
+    box-shadow: $quality-shadow-gold;
+
+    .highlightFrame {
+        position: absolute;
+        top: 12rpx;
+        right: 12rpx;
+        bottom: 12rpx;
+        left: 12rpx; // 设计稿 inset 6px
+        border: 2rpx solid rgba($quality-gold, 0.12); // 古典细线内框
+        border-radius: 20rpx; // 设计稿 10px
+    }
+
+    .highlightWatermark {
+        position: absolute;
+        right: 20rpx;
+        bottom: -36rpx; // 设计稿 -18px，字符下缘被卡纸裁掉
+        font-family: $font-family-seal;
+        font-size: 152rpx; // 设计稿 76px
+        font-weight: $font-weight-bold;
+        line-height: 1;
+        color: $quality-gold;
+        opacity: 0.06;
+        z-index: 0;
+    }
+
+    .highlightHeader {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24rpx; // 设计稿 12px
+    }
+
+    /* 「◆ 核心亮点」：◆ 是几何符号非 emoji，随徽章同字号内联，
+       不单拆子元素——Icon 组件是块级塞不进 Text，且设计稿里 ◆ 只是起首装饰 */
+    .highlightBadge {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-family: $font-family-seal;
+        font-size: 26rpx; // 设计稿 13px
+        font-weight: $font-weight-semibold;
+        color: $quality-gold;
+        letter-spacing: 2rpx;
+    }
+
+    .sealTag {
+        font-family: $font-family-seal;
+        font-size: $font-size-xs; // 设计稿 11px
+        color: $quality-seal;
+        border: 2rpx solid rgba($quality-seal, 0.4);
+        background: rgba($quality-seal, 0.05);
+        padding: 4rpx 14rpx; // 设计稿 1px 7px
+        border-radius: 6rpx; // 设计稿 3px
+        letter-spacing: 2rpx;
+    }
+
+    /* Text 是 inline 元素，margin 不生效且会被前后文挤——显式 block 化 */
+    .highlightText {
+        display: block;
+        position: relative;
+        z-index: 1;
+        font-size: 29rpx; // 设计稿 14.5px
+        color: $color-text-primary;
+        line-height: 1.75; // 设计稿 1.75
+        letter-spacing: 0.5rpx;
+    }
+
+    /* 数字胶囊（行内）：竖向 padding 在 Text 上无效，靠字号撑高视觉体积 */
+    .highlightNum {
+        font-family: $font-family-seal;
+        font-size: 34rpx; // 设计稿 17px
+        font-weight: $font-weight-bold;
+        color: $quality-green;
+        background: $quality-green-light;
+        padding: 0 12rpx; // 设计稿 0 6px
+        border-radius: 8rpx; // 设计稿 4px
+        margin: 0 4rpx; // 设计稿 0 2px
+    }
+}
+/* ===== 新增：指标列表 + 商城转化入口（调研刚需④） ===== */
+.sectionHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+}
+
+.sectionMore {
+    font-size: $font-size-sm;
+    color: $color-primary;
+}
+
+/* ===== 品质对比（2026-10 审美升级）：图例置顶 + 分组横条 =====
+   原先用 SimpleBarChart 竖柱 + 文字列表，柱高写 inline style，
+   H5 端 rpx 整条丢弃成空白（§8-14）；改横条后宽度同样走 inline，
+   但宽度是百分比值不带 rpx 单位，跨端都安全 */
+.compareHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28rpx; // 设计稿 14px
+}
+
+.compareTitle {
+    font-family: $font-family-seal;
+    font-size: 40rpx; // 设计稿 20px
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    letter-spacing: 2rpx;
+}
+
+.legendBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 28rpx; // 设计稿 14px
+}
+
+.legendItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.legendDot {
+    width: 20rpx; // 设计稿 10px
+    height: 20rpx;
+    border-radius: 6rpx; // 设计稿 3px
+    margin-right: 10rpx; // 设计稿 gap 5px
+    flex-shrink: 0;
+}
+
+.dotChashan {
+    background: $quality-green;
+    box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
+}
+
+.dotNormal {
+    background: $quality-ochre;
+}
+
+.legendText {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+}
+
+.compareCard {
+    position: relative;
+    padding: 48rpx 44rpx 20rpx; // 设计稿 24px 22px 10px
+    background: $quality-paper;
+    border-radius: $radius-xl; // 设计稿 16px
+    box-shadow: $quality-shadow-card;
+}
+
+.metricItem {
+    padding-bottom: 44rpx; // 设计稿 22px
+    border-bottom: 2rpx dashed rgba($study-edge, 0.22); // 设计稿 1px 虚线
+    margin-bottom: 44rpx;
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 16rpx; // 设计稿 8px
+    }
+}
+
+.metricHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24rpx; // 设计稿 12px
+}
+
+.metricTitle {
+    font-family: $font-family-seal;
+    font-size: 32rpx; // 设计稿 16px
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+}
+
+/* 风味解读微标签：白底卡上 $quality-green 对比度实测 5.08:1（≥4.5:1） */
+.metricBenefit {
+    font-size: 23rpx; // 设计稿 11.5px
+    font-weight: $font-weight-medium;
+    color: $quality-green;
+    background: $quality-green-light;
+    border: 2rpx solid rgba($quality-green, 0.18); // 设计稿 1px
+    padding: 4rpx 16rpx; // 设计稿 2px 8px
+    border-radius: $radius-button;
+}
+
+/* 横条行：grid 三栏（标签 / 槽 / 数值）。单位随数值一起进 barValue，
+   标签栏保持短词不换行 */
+.barRow {
+    display: grid;
+    grid-template-columns: 124rpx 1fr 152rpx; // 设计稿 62px 1fr 76px
+    align-items: center;
+    gap: 20rpx; // 设计稿 10px
+    margin-bottom: 18rpx; // 设计稿 9px
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.barLabel {
+    font-size: 25rpx; // 设计稿 12.5px
+    color: $color-text-secondary;
+}
+
+.barTrack {
+    height: 24rpx; // 设计稿 12px
+    background: $quality-track;
+    border-radius: $radius-button;
+    overflow: hidden;
+    padding: 3rpx; // 设计稿 1.5px，纸槽内凹的呼吸位
+    box-sizing: border-box;
+    box-shadow:
+        inset 0 2rpx 4rpx rgba($quality-ink, 0.16),
+        0 2rpx 0 rgba(255, 255, 255, 0.7);
+}
+
+.barFill {
+    height: 100%;
+    border-radius: $radius-button;
+    transition: width 0.6s $ease-out;
+}
+
+.fillPrimary {
+    background: linear-gradient(90deg, $quality-green-mid, $quality-green-deep);
+    box-shadow: inset 0 4rpx 4rpx rgba(255, 255, 255, 0.25);
+}
+
+.fillSecondary {
+    background: linear-gradient(90deg, $quality-ochre-mid, $quality-ochre-deep);
+    opacity: 0.85;
+}
+
+.barValue {
+    font-family: $font-family-seal;
+    font-size: 27rpx; // 设计稿 13.5px
+    color: $color-text-secondary;
+    text-align: right;
+}
+
+/* 首条（槎山白茶）加重：标签压墨、数值走主题绿放大一档 */
+.barPrimary {
+    .barLabel {
+        font-weight: $font-weight-medium;
+        color: $color-text-primary;
+    }
+
+    .barValue {
+        font-size: 29rpx; // 设计稿 14.5px
+        font-weight: $font-weight-bold;
+        color: $quality-green;
+    }
+}
+
+.chartFootnote {
+    display: block;
+    font-size: 23rpx; // 设计稿 11.5px
+    color: $color-text-tertiary; // 实测米底 4.55:1（设计稿 #8c8378 不达标，弃用）
+    text-align: center;
+    margin-top: 28rpx; // 设计稿 14px
+    letter-spacing: 1rpx;
+    padding-bottom: $spacing-sm;
+}
+
+.productScroll {
+    white-space: nowrap;
+    width: 100%;
+}
+
+.productCard {
+    display: inline-block;
+    width: 200px;
+    margin-right: $spacing-md;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    overflow: hidden;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.productImg {
+    width: 100%;
+    height: 120px;
+}
+
+.productName {
+    display: block;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    padding: $spacing-sm $spacing-sm 0;
+}
+
+.productDesc {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    padding: $spacing-xs $spacing-sm;
+    line-height: $line-height-normal;
+}
+
+.productPrice {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-error;
+    font-weight: $font-weight-bold;
+    padding: 0 $spacing-sm $spacing-sm;
+}
+
+.productUnit {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    font-weight: $font-weight-normal;
+}
+
+.contactTip {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    background: rgba($color-primary, 0.08);
+    border-radius: $radius-md;
+}
+
+.contactText {
+    font-size: $font-size-sm;
+    color: $color-primary-dark;
+}
+
+/* ===== 新增：溯源验真入口 ===== */
+.traceEntry {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-md;
+}
+
+.traceBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-xl;
+    @include button-reset;
+    @include paper-btn-sage;
+
+    .traceBtnIcon {
+        font-size: 40rpx;
+        margin-right: 10rpx;
+    }
+
+    .traceBtnText {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-on-btn;
+    }
+
+    /* 黄金比例 1.618 : 1 —— 宽度按黄金比分配，高度等比跟随 */
+    &:first-child {
+        flex: 1.618;
+        height: 250rpx; /* 404rpx 宽 : 250rpx 高 ≈ 1.618 : 1 */
+    }
+
+    &:last-child {
+        flex: 1;
+        height: 154rpx; /* 250rpx 宽 : 154rpx 高 ≈ 1.618 : 1 */
+    }
+}
+
+.empty {
+    padding: $spacing-lg;
+    text-align: center;
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+}
+
+.offlineTip {
+    padding: $spacing-md;
+    margin-bottom: $spacing-lg;
+    background: rgba($color-primary, 0.08);
+    border-radius: $radius-md;
+}
+
+.offlineText {
+    font-size: $font-size-sm;
+    color: $color-accent-text;
+}

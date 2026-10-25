@@ -1,0 +1,13 @@
+@use '@/styles/compat.scss';
+@use '@/styles/variables.scss' as *;
+@use '@/styles/animations.scss';
+
+// 全局样式
+page {
+  animation: fadeIn 0.5s ease both;
+  font-family: $font-family-base;
+  font-size: $font-size-md;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  @include paper-surface;
+}

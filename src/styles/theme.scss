@@ -1,0 +1,41 @@
+// ============================================
+// 主题配色变量 - 槎山白茶文旅小程序
+// 视觉风格：新中式茶文化 + 现代简约卡片式设计
+// ============================================
+
+// 品牌主题色 - 白茶叶绿
+$color-primary: #5B8C5A; // 主品牌色（茶叶绿）
+$color-primary-light: #7AB379; // 浅绿（渐变辅助）
+$color-primary-dark: #3D6B3C; // 深绿（强调）
+
+// 辅助色 - 土地色/茶文化
+$color-accent: #C49A6C; // 土地色（制茶工艺）
+$color-accent-light: #E0C098; // 浅土黄
+
+// 功能色
+$color-success: #00B42A; // 成功
+$color-warning: #FF7D00; // 警告
+$color-error: #F53F3F; // 错误
+$color-info: #165DFF; // 信息
+
+// 背景色
+$color-bg-page: #F8F9FA; // 页面背景（浅灰白）
+$color-bg-card: #FFFFFF; // 卡片背景（纯白）
+$color-bg-section: #F0F4F0; // 区块背景（淡绿灰）
+$color-bg-hover: #F2F3F5; // 悬停背景
+
+// 文本色
+$color-text-primary: #1D2129; // 主要文本
+$color-text-secondary: #4E5969; // 常规文本
+$color-text-tertiary: #86909C; // 次要文本
+$color-text-white: #FFFFFF;     // 白色文本
+
+// 边框色
+$color-border: #E5E6EB;         // 边框线
+$color-border-light: #F2F3F5;   // 浅边框
+$color-divider: #F2F3F5;        // 分割线
+
+// 业务色
+$color-tea-badge: #FFF3E6;      // 茶标签背景
+$color-route-tag: #E8F5E9;      // 路线标签
+$color-npc-bg: #F5F0E6;         // NPC 背景色（文化感）

@@ -1,0 +1,91 @@
+@use '@/styles/variables.scss' as *;
+
+.barChart {
+    padding: $spacing-lg;
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+
+    .barGroup {
+        margin-bottom: $spacing-xl;
+
+        .barContainer {
+            display: flex;
+            gap: $spacing-md;
+            align-items: flex-end;
+            height: 240rpx;
+            padding-bottom: $spacing-sm;
+            border-bottom: 1rpx solid $color-border;
+        }
+
+        .barWrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: $spacing-xs;
+        }
+
+        .bar1 {
+            width: 100%;
+            min-height: 20rpx;
+            background: linear-gradient(180deg, $color-primary 0%, $color-primary-light 100%);
+            border-radius: $radius-xs $radius-xs 0 0;
+            transition: height $transition-base;
+        }
+
+        .bar2 {
+            width: 100%;
+            min-height: 20rpx;
+            background: linear-gradient(180deg, $color-accent 0%, $color-accent-light 100%);
+            border-radius: $radius-xs $radius-xs 0 0;
+            transition: height $transition-base;
+        }
+
+        .barValue {
+            font-size: $font-size-xs;
+            color: $color-text-secondary;
+            white-space: nowrap;
+        }
+
+        .barLabel {
+            display: block;
+            text-align: center;
+            font-size: $font-size-sm;
+            color: $color-text-primary;
+            margin-top: $spacing-xs;
+            @include text-ellipsis;
+        }
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: $spacing-xl;
+        margin-top: $spacing-md;
+
+        .legendItem {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+
+            .legendColor1 {
+                width: 24rpx;
+                height: 24rpx;
+                background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+                border-radius: $radius-xs;
+            }
+
+            .legendColor2 {
+                width: 24rpx;
+                height: 24rpx;
+                background: linear-gradient(135deg, $color-accent 0%, $color-accent-light 100%);
+                border-radius: $radius-xs;
+            }
+
+            .legendText {
+                font-size: $font-size-sm;
+                color: $color-text-secondary;
+            }
+        }
+    }
+}

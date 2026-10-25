@@ -1,0 +1,56 @@
+@use '@/styles/variables.scss' as *;
+
+.book-page { @include paper-surface; min-height: 100vh; padding: 30rpx; padding-bottom: 60rpx; }
+.book-header { padding: 10rpx 0 24rpx; }
+.book-title { font-size: 40rpx; font-weight: bold; color: $color-text-primary; }
+
+.pick-card { background: $color-text-white; border-radius: 20rpx; padding: 28rpx; margin-bottom: 24rpx; border: 1rpx solid $color-border-light; }
+.pick-name { display: block; font-size: 32rpx; font-weight: bold; color: $color-text-primary; }
+.pick-session { display: block; font-size: 26rpx; color: $color-primary; margin-top: 8rpx; }
+.pick-left { display: block; font-size: 24rpx; color: $color-text-tertiary; margin-top: 8rpx; }
+
+.form-card { background: $color-text-white; border-radius: 20rpx; padding: 10rpx 28rpx; border: 1rpx solid $color-border-light; }
+.field { padding: 24rpx 0; border-bottom: 2rpx solid $color-border-light; }
+.field:last-child { border-bottom: none; }
+.label { display: block; font-size: 28rpx; color: $color-text-primary; font-weight: bold; margin-bottom: 16rpx; }
+.input { background: $color-bg-hover; border-radius: 12rpx; padding: 20rpx; font-size: 28rpx; height: 80rpx; }
+.stepper { display: flex; align-items: center; }
+.step-btn { width: 70rpx; height: 70rpx; line-height: 70rpx; text-align: center; border-radius: $radius-circle; background: $color-route-tag; color: $color-primary; font-size: 40rpx; }
+.step-val { width: 90rpx; text-align: center; font-size: 34rpx; font-weight: bold; color: $color-text-primary; }
+
+.err-tip { background: rgba($color-error, 0.08); border-radius: 12rpx; padding: 20rpx; margin: 24rpx 0; text-align: center; }
+.err-tip Text { color: $color-error; font-size: 26rpx; }
+
+.submit-btn {
+    border-radius: $radius-button;
+    height: 96rpx;
+    line-height: 96rpx;
+    @include button-reset;
+    margin: 30rpx 0 0;
+    @include paper-btn-sage;
+
+    Text {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+    }
+}
+
+.success-card { background: $color-text-white; border-radius: 24rpx; padding: 60rpx 40rpx; margin-top: 60rpx; text-align: center; border: 1rpx solid $color-border-light; }
+.success-icon { display: block; width: 110rpx; height: 110rpx; line-height: 110rpx; border-radius: $radius-circle; background: $gradient-hero; color: $color-text-white; font-size: 60rpx; margin: 0 auto 24rpx; }
+.success-title { display: block; font-size: 38rpx; font-weight: bold; color: $color-text-primary; }
+.success-code { display: block; font-size: 26rpx; color: $color-text-tertiary; margin-top: 12rpx; }
+.success-info { background: $color-bg-hover; border-radius: 16rpx; padding: 28rpx; margin: 30rpx 0; text-align: left; }
+.si-line { display: block; font-size: 28rpx; color: $color-text-secondary; padding: 8rpx 0; }
+.big-btn {
+    border-radius: $radius-button;
+    height: 92rpx;
+    line-height: 92rpx;
+    @include button-reset;
+    margin-top: 20rpx;
+    @include paper-btn-sage;
+
+    Text {
+        font-size: $font-size-md;
+    }
+}
+.back-link { display: block; text-align: center; color: $color-primary; font-size: 26rpx; margin-top: 30rpx; }

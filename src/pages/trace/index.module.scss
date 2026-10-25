@@ -1,0 +1,263 @@
+@use '@/styles/variables.scss' as *;
+
+.tracePage {
+    padding: $spacing-lg $page-padding;
+}
+
+.header {
+    padding-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+
+    .headerTitle {
+        /* 和 study / quality 同一套页头：大号墨色标题 + 金线 + 说明文字。
+           标题和说明都是 Text（inline），不 block 化会粘成一行 */
+        @include masthead-title(60rpx);
+    }
+
+    .headerRule {
+        @include masthead-rule(64rpx);
+    }
+
+    .headerDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-secondary;
+        letter-spacing: 1rpx;
+    }
+}
+
+.tabBar {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-md 0;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    /* 三个 Tab 都要有框：只给选中项加边框时，未选中项会看起来「没有卡片」 */
+    border: 1rpx solid $color-border-light;
+
+    .tabEmoji {
+        font-size: 28px;
+        margin-bottom: 4px;
+    }
+
+    .tabText {
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+    }
+}
+
+.tabActive {
+    background: $brand-1;
+    border-color: $color-primary;
+
+    .tabText {
+        color: $color-primary;
+        font-weight: $font-weight-semibold;
+    }
+}
+
+/* 溯源主卡：原本是深绿渐变 + 半透明白色内层，绿色里压白字读起来发灰；
+   改成宣纸白卡 + 金线，「证据」类信息在浅底上才显得可信 */
+.infoCard {
+    padding: $spacing-lg;
+    background: $color-bg-card;
+    border: 1rpx solid $color-gold-line-strong;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-lg;
+
+    .productName {
+        display: block;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-text-primary;
+        letter-spacing: 1rpx;
+        margin-bottom: $spacing-md;
+    }
+
+    .tagRow {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-md;
+    }
+
+    .tag {
+        font-size: $font-size-xs;
+        color: $color-primary-dark;
+        background: $brand-1;
+        border: 1rpx solid $color-gold-line;
+        padding: 4rpx 16rpx;
+        border-radius: $radius-round;
+    }
+
+    .baseGrid {
+        background: $color-bg-component;
+        border-radius: $radius-md;
+        padding: $spacing-md;
+    }
+}
+
+.card {
+    padding: $spacing-lg;
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-lg;
+
+    .cardHead {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: $spacing-md;
+    }
+
+    .cardIcon {
+        font-size: 20px;
+        margin-right: $spacing-sm;
+    }
+
+    .cardTitle {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+    }
+}
+
+.placeholder {
+    width: 100%;
+    height: 160px;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    .placeholderImg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .placeholderEmoji {
+        font-size: 44px;
+    }
+
+    .placeholderLabel {
+        position: relative;
+        z-index: $z-raised;
+        margin-top: $spacing-xs;
+        padding: 2px 10px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.35);
+        font-size: $font-size-sm;
+        color: $color-text-white;
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid rgba($color-text-tertiary, 0.12);
+
+    .rowLabel {
+        width: 140px;
+        flex-shrink: 0;
+        font-size: $font-size-sm;
+        color: $color-text-tertiary;
+    }
+
+    .rowValue {
+        flex: 1;
+        font-size: $font-size-sm;
+        color: $color-text-primary;
+        line-height: $line-height-normal;
+    }
+}
+
+.desc {
+    display: block;
+    margin-top: $spacing-md;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: $line-height-loose;
+}
+
+.steps {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin: $spacing-md 0;
+
+    .step {
+        font-size: $font-size-xs;
+        color: $color-primary-dark;
+        background: rgba($color-primary, 0.1);
+        padding: 4px 10px;
+        border-radius: 999px;
+    }
+}
+
+.params {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .paramItem {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $spacing-sm $spacing-md;
+        background: $color-bg-section;
+        border-radius: $radius-md;
+
+        .paramName {
+            font-size: $font-size-sm;
+            color: $color-text-secondary;
+        }
+
+        .paramValue {
+            font-size: $font-size-sm;
+            color: $color-primary;
+            font-weight: $font-weight-semibold;
+        }
+    }
+}
+
+.trustBadge {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-md;
+    margin-bottom: $spacing-xl;
+    background: rgba($color-primary, 0.08);
+    border-radius: $radius-md;
+
+    .trustIcon {
+        font-size: 18px;
+        margin-right: $spacing-sm;
+    }
+
+    .trustText {
+        font-size: $font-size-sm;
+        color: $color-primary-dark;
+        font-weight: $font-weight-semibold;
+    }
+}

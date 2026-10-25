@@ -1,0 +1,89 @@
+@use '@/styles/variables.scss' as *;
+
+.taskCard {
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    margin-bottom: $spacing-lg;
+
+    .taskHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-md $spacing-lg;
+        background: linear-gradient(135deg, $color-bg-section 0%, $color-bg-card 100%);
+
+        .taskTheme {
+            padding: $spacing-xs $spacing-sm;
+            background-color: $color-primary;
+            border-radius: $radius-xs;
+
+            .themeText {
+                font-size: $font-size-xs;
+                color: $color-text-white;
+            }
+        }
+
+        .taskDifficulty {
+            padding: $spacing-xs $spacing-sm;
+            background-color: $color-warning;
+            border-radius: $radius-xs;
+
+            .difficultyText {
+                font-size: $font-size-xs;
+                color: $color-text-white;
+            }
+        }
+    }
+
+    .taskContent {
+        padding: $spacing-lg;
+    }
+
+    .taskTitle {
+        display: block;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-sm;
+    }
+
+    .taskDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-secondary;
+        margin-bottom: $spacing-md;
+        @include text-ellipsis-multi(2);
+    }
+
+    .taskSteps {
+        margin-bottom: $spacing-md;
+
+        .stepsLabel {
+            font-size: $font-size-sm;
+            color: $color-text-tertiary;
+        }
+    }
+
+    .taskAction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-sm;
+        background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+        border-radius: $radius-button;
+        cursor: pointer;
+        transition: all $transition-base;
+
+        &:active {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        .actionText {
+            font-size: $font-size-md;
+            color: $color-text-white;
+            font-weight: $font-weight-medium;
+        }
+    }
+}

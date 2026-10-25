@@ -1,0 +1,450 @@
+@use '@/styles/variables.scss' as *;
+
+.homePage {
+    min-height: 100vh;
+    padding: 0 0 $spacing-xxl;
+    @include paper-surface;
+}
+
+/* ===================== 国风 Hero ===================== */
+/* 底图是实拍茶垄（清晨薄雾逆光）：色块时代它就是「一块没有信息的绿色」，
+   换成照片后，同一块区域同时承担了氛围与「这是真茶园」的信任状。 */
+.header {
+    position: relative;
+    /* 父级 .homePage 没有左右内边距，这里不能再写负 margin 抵消：
+       否则 hero 会左右各溢出 16px，标题首字被裁成「槎」的右半边 */
+    margin: 0;
+    padding: 72rpx $page-padding 96rpx;
+    /* 兜底底色：底图没加载出来时仍是深茶绿，不会闪白 */
+    background: $color-primary-dark;
+    border-radius: 0 0 44rpx 44rpx;
+    overflow: hidden;
+
+    /* 标题独占一行：原来和状态胶囊左右分栏，375 宽下标题被挤成
+       「槎山智慧 / 文旅」两行，断在最不该断的地方 */
+    .headerTop {
+        display: block;
+        margin-bottom: $spacing-md;
+    }
+
+    .headerTitle {
+        font-size: $font-size-display;
+        font-weight: $font-weight-bold;
+        color: $color-text-white;
+        letter-spacing: 4rpx;
+        text-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.18);
+    }
+
+    .headerDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-on-dark;
+        margin-top: $spacing-xs;
+        letter-spacing: 1rpx;
+    }
+
+    /* 状态胶囊挪到副标题下方，横排一行（屏幕窄时自动折行） */
+    .statusBar {
+        margin-top: $spacing-md;
+    }
+}
+
+/* 实拍底图：小程序 wxss 的 background-image 不吃本地相对路径（只吃网络图/base64），
+   所以必须用绝对定位的 <Image mode="aspectFill"> 当底图铺满 hero。 */
+.heroBg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 压字 scrim：上（雾天光最亮）压深、中间放透露出茶垄、底部再压深衬副标题与印章。
+   不铺这一层的话，左上角那团雾会把白字压到 3:1 以下。 */
+.heroScrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        178deg,
+        rgba(16, 26, 19, 0.74) 0%,
+        rgba(16, 26, 19, 0.34) 32%,
+        rgba(16, 26, 19, 0.5) 66%,
+        rgba(16, 26, 19, 0.84) 100%
+    );
+}
+
+/* 内容层抬到图片与 scrim 之上 */
+.heroContent {
+    position: relative;
+    z-index: $z-raised;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 国风品牌徽标 */
+.heroLogo {
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: $radius-round;
+    margin-right: 10rpx;
+}
+
+.heroBadge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 8rpx 20rpx;
+    margin-bottom: $spacing-md;
+    /* 底图上方是天光最亮的雾区：白色半透明胶囊会被雾吃掉，
+       改成深色玻璃（照片上压一层墨），白字才有对比 */
+    @include glass-pill;
+    border-radius: $radius-round;
+    backdrop-filter: blur(6rpx);
+    -webkit-backdrop-filter: blur(6rpx);
+
+    text {
+        font-size: $font-size-xs;
+        color: $color-text-white;
+        letter-spacing: 1rpx;
+    }
+}
+
+/* 状态胶囊（横排，半透明白） */
+.statusBar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+
+    .statusItem {
+        display: inline-flex;
+        align-items: center;
+        gap: 6rpx;
+        padding: 6rpx 16rpx;
+        @include glass-pill;
+        border-radius: $radius-round;
+
+        .statusIcon {
+            font-size: $font-size-sm;
+        }
+
+        .statusText {
+            font-size: $font-size-xs;
+            color: $color-text-on-dark;
+        }
+    }
+}
+
+/* ===================== 区块 ===================== */
+.section {
+    margin: $spacing-xl $page-padding 0;
+
+    .sectionTitle {
+        position: relative;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-md;
+        padding-left: 20rpx;
+
+        // 国风竖线标题装饰
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8rpx;
+            bottom: 8rpx;
+            width: 8rpx;
+            border-radius: 4rpx;
+            background: $gradient-gold;
+        }
+    }
+}
+
+/* ===================== 快捷入口 ===================== */
+.quickEntry {
+    display: flex;
+    align-items: center;
+    margin: $spacing-lg $page-padding 0;
+    padding: $spacing-lg;
+    background: $gradient-card;
+    border-radius: $radius-lg;
+    border: 1rpx solid $color-gold-line-strong;
+    @include press-fx;
+
+    /* 图标底座：浅茶底 + 金线，和全站宣纸气质一致；
+       之前是深绿实心圆角块，两块并排像手机桌面的 App 图标 */
+    .quickIconWrap {
+        flex-shrink: 0;
+        width: 84rpx;
+        height: 84rpx;
+        border-radius: $radius-md;
+        margin-right: $spacing-md;
+        background: $brand-1;
+        border: 1rpx solid $color-gold-line;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quickIcon {
+        font-size: 44rpx;
+        line-height: 1;
+    }
+
+    .quickTextBox {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .quickTitle {
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+    }
+
+    .quickDesc {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-top: 4rpx;
+    }
+
+    .quickArrow {
+        font-size: $font-size-xl;
+        color: $color-accent-text;
+        font-weight: $font-weight-bold;
+    }
+}
+
+/* ===================== 偏好表单 ===================== */
+.formCard {
+    background: $gradient-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    border: 1rpx solid $color-gold-line-strong;
+    margin: 0 $page-padding;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+
+    /* 卡纸按钮：主 = 深艾草，次 = 燕麦纸。材质规则见 variables.scss 的 paper-btn-* */
+    .submitBtn {
+        flex: 1;
+        height: $button-height-lg;
+        border-radius: $radius-button;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include button-reset;
+        @include paper-btn-sage;
+
+        .btnText {
+            font-size: $font-size-md;
+            color: $color-on-btn;
+            font-weight: $font-weight-medium;
+            letter-spacing: 2rpx;
+            text-shadow: 0 1rpx 0 rgba(0, 0, 0, 0.18); // 极轻压印，双向 1px 会糊边
+        }
+    }
+
+    .skipBtn {
+        flex: 0 0 auto;
+        min-width: 136rpx; // 两个字时也保持「按钮」的比例，不然 999rpx 圆角会把它压成一个圆点
+        padding: 0 $spacing-lg;
+        height: $button-height-lg;
+        border-radius: $radius-button;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include button-reset;
+        @include paper-btn-oat;
+
+        .btnText {
+            font-size: $font-size-md;
+            color: $color-on-oat;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    /* 按下态（靠 hoverClass 触发，替代真机不稳的 :active） */
+    .btnPress {
+        @include paper-btn-press;
+    }
+}
+
+/* ===================== 推荐结果 ===================== */
+.routeList {
+    .emptyTip {
+        text-align: center;
+        padding: $spacing-xl;
+        color: $color-text-tertiary;
+        font-size: $font-size-md;
+    }
+}
+
+// ---------- 推荐引擎说明 ----------
+.engineBar {
+    display: flex;
+    align-items: flex-start;
+    padding: $spacing-sm $spacing-md;
+    background: linear-gradient(135deg, rgba($color-primary, 0.12) 0%, rgba($color-accent, 0.14) 100%);
+    border-left: 6rpx solid $color-accent;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-sm;
+}
+
+.engineIcon {
+    font-size: 28rpx;
+    margin-right: $spacing-xs;
+}
+
+.engineCol {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.engineName {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary-dark;
+}
+
+.engineNote {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    line-height: $line-height-normal;
+    margin-top: 4rpx;
+}
+
+.reasonBar {
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-primary, 0.08);
+    border-radius: $radius-md;
+    margin-bottom: $spacing-md;
+}
+
+.reasonText {
+    font-size: $font-size-sm;
+    color: $color-primary-dark;
+    line-height: $line-height-normal;
+}
+
+.comboCard {
+    background: $gradient-card;
+    border-radius: $radius-md;
+    border: 1rpx solid $color-gold-line;
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+}
+
+.comboName {
+    display: block;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+}
+
+.comboPartner {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-accent-text;
+    margin-bottom: $spacing-xs;
+}
+
+.comboDesc {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: $line-height-normal;
+    margin-bottom: $spacing-sm;
+}
+
+.comboFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comboMeta {
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+}
+
+.comboHighlight {
+    font-size: $font-size-xs;
+    color: $color-error;
+}
+
+/* ===================== 离线提示 ===================== */
+.offlineBar {
+    margin: $spacing-lg $page-padding 0;
+    padding: $spacing-sm $spacing-md;
+    background: $color-accent-soft;
+    border: 1rpx solid $color-border-gold;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+}
+
+.offlineIcon {
+    flex-shrink: 0;
+    width: 56rpx;
+    height: 56rpx;
+    border-radius: 8rpx;
+}
+
+.offlineBarText {
+    font-size: $font-size-xs;
+    color: $color-accent-text;
+    line-height: 1.6;
+}
+
+// 停留时长：分段选择器（Slider 版，替代原来的单行标签）
+.segmentField {
+    margin-bottom: $spacing-lg;
+}
+
+.segmentTitle {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-sm;
+}
+
+/* ------------------------------------------------------------
+ * 本地 keyframes 的约定：CSS Modules 会连动画名一起哈希，因此模块内引用的
+ * 动画必须在本文件里定义，否则动画名悬空、静默失效（AGENTS §8 第 10 条）。
+ * 全局 keyframes 在 src/styles/animations.scss，只能给全局类 .anim-* 用。
+ * hero 换成实拍底图后，原来的漂浮茶叶 / 光斑两个装饰已删除，
+ * 这里的 keyframes 也一并清掉，避免留下无人引用的死代码。
+ * ------------------------------------------------------------ */
+
+/* ===================== 纸感配件（印章 / 线描） ===================== */
+/* 落款印章压在 hero 右下角：左侧是文案、右侧是朱印，形成「文字—印」的对照。
+   ⚠ 这里必须写成两级选择器：Seal 组件自己的 .seal 带 position:relative，
+   同权重下组件样式后加载，单类名 .heroSeal 会被它压掉（踩过）。 */
+.header .heroSeal {
+    position: absolute;
+    right: $page-padding;
+    bottom: 64rpx;
+    z-index: $z-raised;
+}
+
+/* 茶枝分隔：横向平铺会因为叶子太密显得花，所以整体只给 40% 透明 */
+.motifDivider {
+    padding: 0 $page-padding;
+    margin: $spacing-sm 0 0;
+}

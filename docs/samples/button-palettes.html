@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>槎山 · 卡纸按钮配色对照</title>
+<style>
+  /* ============ 纸面（与 src/styles/textures.scss 同参数） ============ */
+  :root {
+    --page: #F6F2E9;        /* 宣纸米底（项目现状） */
+    --card: #FBF8F1;        /* 纸片白（比纯白低一档，卡片底） */
+    --oat:  #E5DEC9;        /* 燕麦卡纸 */
+    --ink:  #38352F;        /* 卡纸上的墨字 */
+    --serif: 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'SimSun', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--page);
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.30  0 0 0 0 0.26  0 0 0 0 0.20  0.26 0.34 0.12 0 -0.20'/><feComponentTransfer><feFuncA type='gamma' amplitude='1.9' exponent='1.4' offset='0'/></feComponentTransfer></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");
+    background-repeat: repeat;
+    font-family: var(--sans);
+    color: var(--ink);
+    padding: 48px 20px 80px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+  }
+  .wrap { width: 100%; max-width: 720px; }
+
+  header { margin-bottom: 36px; }
+  h1 {
+    font-family: var(--serif);
+    font-size: 34px;
+    letter-spacing: 6px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #2B342C;
+    margin-bottom: 12px;
+  }
+  .rule { width: 72px; height: 3px; background: #B98E4E; border-radius: 2px; margin-bottom: 16px; }
+  .lede { font-size: 14px; line-height: 1.8; color: #5A6157; }
+  .lede b { color: var(--ink); }
+
+  /* ============ 卡片（纸片） ============ */
+  .sheet {
+    background: var(--card);
+    border: 1px solid rgba(74, 124, 89, .10);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 4px rgba(47, 93, 58, .05), inset 0 1px 0 rgba(255,255,255,.9);
+  }
+  .sheet-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .sheet-name {
+    font-family: var(--serif);
+    font-size: 21px;
+    letter-spacing: 3px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .sheet-hex {
+    font-family: ui-monospace, monospace;
+    font-size: 12px;
+    color: #8A938C;
+    letter-spacing: .5px;
+  }
+  .sheet-verdict {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    letter-spacing: 1px;
+  }
+  .tag-good { background: rgba(74,124,89,.12); color: #3F5A47; }
+  .tag-need { background: rgba(185,142,78,.18); color: #8A6631; }
+  .tag-no   { background: rgba(168,60,46,.10); color: #A83C2E; }
+  .sheet-note { font-size: 12.5px; line-height: 1.75; color: #6B7469; margin-bottom: 18px; }
+
+  /* ============ 卡纸按钮（光从左上：右下投影 + 顶高光 + 底背光） ============ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;              /* 项目 88rpx 的等效视觉高度 */
+    min-width: 208px;
+    padding: 0 34px;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--serif);
+    font-size: 19px;
+    letter-spacing: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:active { transform: translateY(2px); }
+
+  /* 主按钮（各组自定义 --tone） */
+  .btn-primary {
+    background: var(--tone);
+    color: #FBF8F1;
+    text-shadow: 0 1px 1px rgba(0,0,0,.32);
+    box-shadow:
+      0 2px 3px rgba(26,45,32,.26),
+      0 8px 12px rgba(26,45,32,.16),
+      inset 0 1px 0 rgba(255,255,255,.18),
+      inset 0 -2px 0 rgba(0,0,0,.14);
+  }
+  .btn-primary:active {
+    box-shadow:
+      0 1px 2px rgba(26,45,32,.24),
+      inset 0 2px 4px rgba(0,0,0,.18);
+    transform: translateY(2px) scale(.985);
+  }
+
+  /* 次按钮（燕麦卡纸） */
+  .btn-oat {
+    background: var(--oat);
+    color: var(--ink);
+    text-shadow: 0 1px 0 rgba(255,255,255,.7);
+    box-shadow:
+      0 2px 3px rgba(56,53,47,.14),
+      0 8px 12px rgba(56,53,47,.09),
+      inset 0 1px 0 rgba(255,255,255,.7),
+      inset 0 -2px 0 rgba(56,53,47,.09);
+  }
+  .btn-oat:active {
+    box-shadow:
+      0 1px 2px rgba(56,53,47,.16),
+      inset 0 2px 4px rgba(56,53,47,.12);
+  }
+
+  /* 文字按钮（幽灵） */
+  .btn-ghost {
+    background: transparent;
+    color: var(--tone);
+    min-width: 0;
+    padding: 0 6px;
+    height: 44px;
+    font-size: 17px;
+    border-radius: 6px;
+    border-bottom: 3px solid var(--tone);
+  }
+
+  /* 禁用（纸凹，无浮起） */
+  .btn-disabled {
+    background: var(--oat);
+    color: #A9A08C;
+    box-shadow:
+      inset 0 2px 4px rgba(56,53,47,.12),
+      inset 0 -1px 0 rgba(255,255,255,.6);
+    cursor: not-allowed;
+    text-shadow: none;
+  }
+
+  .row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .row-label {
+    width: 100%;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #9AA39B;
+    margin-bottom: -6px;
+    text-transform: uppercase;
+  }
+
+  /* 页内预览卡（看按钮与内容的搭配） */
+  .mock {
+    margin-top: 22px;
+    padding: 22px;
+    border-radius: 14px;
+    background: #F1EDE4;
+    border: 1px solid rgba(74,124,89,.08);
+  }
+  .mock-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .mock-text { font-size: 13px; line-height: 1.8; color: #6B7469; margin-bottom: 18px; }
+
+  footer {
+    margin-top: 46px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(74,124,89,.14);
+    font-size: 12.5px;
+    line-height: 1.9;
+    color: #7A837B;
+  }
+  footer b { color: var(--ink); }
+  code { font-family: ui-monospace, monospace; font-size: 11.5px; background: rgba(74,124,89,.08); padding: 1px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>卡纸按钮 · 配色对照</h1>
+  <div class="rule"></div>
+  <div class="lede">
+    五组主色，<b>阴影结构、圆角、字形、字号完全相同</b>，只换颜色——所以看到的差异就是色彩本身。
+    每组给出「白字/米白字压在上面」的对比度，<b>AA 合格线 4.5</b>，AAA 为 7。
+    底色是项目真实的宣纸米底（<code>#F6F2E9</code> + 纤维噪点），卡片是纸片白（<code>#FBF8F1</code>）。
+  </div>
+</header>
+
+<!-- ============ A 现状对照 ============ -->
+<section class="sheet" style="--tone:#4A7C59">
+  <div class="sheet-head">
+    <span class="sheet-name">A · 现状主色</span>
+    <span class="sheet-hex">#4A7C59</span>
+    <span class="sheet-verdict tag-need">白字 4.86 · 刚够</span>
+  </div>
+  <div class="sheet-note">
+    全站现用的主色。当作图标和文字时合格，但压在按钮上偏「鲜」——饱和度 26%，
+    在卡纸语境里像塑料贴片，这也是你觉得「深绿不搭」的来源之一：它不缺亮度，缺的是灰度。
+  </div>
+  <div class="row">
+    <button class="btn btn-primary">开始游览</button>
+    <button class="btn btn-oat">查看全部</button>
+    <button class="btn btn-ghost">跳过</button>
+    <button class="btn btn-disabled">未解锁</button>
+  </div>
+</section>
+
+<!-- ============ B 艾草绿 ============ -->
+<section class="sheet" style="--tone:#51684F">
+  <div class="sheet-head">
+    <span class="sheet-name">B · 艾草绿</span>
+    <span class="sheet-hex">#51684F</span>
+    <span class="sheet-verdict tag-good">白字 6.10 · AA+</span>
+  </div>
+  <div class="sheet-note">
+    你给的那张参考图的原色。饱和度约 18%，比现状灰一档，压在纸上更像「染色的卡纸」而不是「喷漆的塑料」。
+    这是三组绿里最像参考图的一支。
+  </div>
+  <div class="row">
+    <button class="btn btn-primary">开始游览</button>
+    <button class="btn btn-oat">查看全部</button>
+    <button class="btn btn-ghost">跳过</button>
+    <button class="btn btn-disabled">未解锁</button>
+  </div>
+  <div class="mock">
+    <div class="mock-title">槎山白茶 · 明前特级</div>
+    <div class="mock-text">一芽一叶头采原料，24 罐独立小包装，附溯源二维码与品质检测报告。</div>
+    <button class="btn btn-primary">立即购买 ¥398/盒</button>
+    <button class="btn btn-oat" style="margin-left:14px">加入购物车</button>
+  </div>
+</section>
+
+<!-- ============ C 沉静绿 ============ -->
+<section class="sheet" style="--tone:#3F5A47">
+  <div class="sheet-head">
+    <span class="sheet-name">C · 沉静绿</span>
+    <span class="sheet-hex">#3F5A47</span>
+    <span class="sheet-verdict tag-good">白字 7.16 · AAA</span>
+  </div>
+  <div class="sheet-note">
+    B 的深一档（饱和度同为 18%、亮度降 7%）。体积感最强、最「镇得住」，
+    按钮和图标会天然形成层级——图标可以留在浅色的 <code>#4A7C59</code>，按钮用这支深绿。
+    我个人最推荐这一组。
+  </div>
+  <div class="row">
+    <button class="btn btn-primary">开始游览</button>
+    <button class="btn btn-oat">查看全部</button>
+    <button class="btn btn-ghost">跳过</button>
+    <button class="btn btn-disabled">未解锁</button>
+  </div>
+</section>
+
+<!-- ============ D 灰绿 ============ -->
+<section class="sheet" style="--tone:#435C47">
+  <div class="sheet-head">
+    <span class="sheet-name">D · 灰绿</span>
+    <span class="sheet-hex">#435C47</span>
+    <span class="sheet-verdict tag-good">白字 7.34 · AAA</span>
+  </div>
+  <div class="sheet-note">
+    饱和度 14%，几乎接近「墨绿灰」。最安静，和纸色的融合度最高，
+    代价是不够「茶」——绿色的生气基本被压没了。适合如果你想要更冷静、更「文件感」的方向。
+  </div>
+  <div class="row">
+    <button class="btn btn-primary">开始游览</button>
+    <button class="btn btn-oat">查看全部</button>
+    <button class="btn btn-ghost">跳过</button>
+    <button class="btn btn-disabled">未解锁</button>
+  </div>
+</section>
+
+<!-- ============ E 茶棕（换个方向） ============ -->
+<section class="sheet" style="--tone:#8A6631">
+  <div class="sheet-head">
+    <span class="sheet-name">E · 茶棕（换方向）</span>
+    <span class="sheet-hex">#8A6631</span>
+    <span class="sheet-verdict tag-good">白字 5.22 · AA+</span>
+  </div>
+  <div class="sheet-note">
+    走暖色系：把按钮做成「烘焙过的茶色卡纸」。和燕麦底同族（同属暖调），
+    两者一起出现时几乎像同一张纸的不同厚度。缺点是它偏离了「绿=茶」的直觉，
+    而且和 <code>$color-accent #B98E4E</code> 的金色会挤在一起，需要拉大明度差才不打架。
+  </div>
+  <div class="row">
+    <button class="btn btn-primary">开始游览</button>
+    <button class="btn btn-oat">查看全部</button>
+    <button class="btn btn-ghost">跳过</button>
+    <button class="btn btn-disabled">未解锁</button>
+  </div>
+  <div class="mock">
+    <div class="mock-title">槎山土蜂蜜 · 春蜜</div>
+    <div class="mock-text">茶园生态蜂蜜，配白茶同饮风味更佳，500g 玻璃瓶装。</div>
+    <button class="btn btn-primary">立即购买 ¥98/瓶</button>
+    <button class="btn btn-oat" style="margin-left:14px">加入购物车</button>
+  </div>
+</section>
+
+<!-- ============ 燕麦纸 三档 ============ -->
+<section class="sheet">
+  <div class="sheet-head">
+    <span class="sheet-name">附 · 燕麦卡纸三档</span>
+    <span class="sheet-verdict tag-good">墨字 9.09 / 9.29 / 8.36</span>
+  </div>
+  <div class="sheet-note">
+    次按钮（燕麦）用哪一档都能过 AA。差别在「与页面底色的距离」：
+    <code>#E5DEC9</code> 离底色最远、层次最清楚；<code>#DED5BD</code> 最接近底色、最安静。
+    三档的墨字对比度都 ≥8.36，安全。
+  </div>
+  <div class="row">
+    <span class="row-label">#E5DEC9（推荐 · 与页面底色区分最清楚）</span>
+    <button class="btn" style="background:#E5DEC9;color:#38352F;text-shadow:0 1px 0 rgba(255,255,255,.7);box-shadow:0 2px 3px rgba(56,53,47,.14),0 8px 12px rgba(56,53,47,.09),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(56,53,47,.09)">生成研学报告</button>
+  </div>
+  <div class="row">
+    <span class="row-label">#E8E0CC（中庸）</span>
+    <button class="btn" style="background:#E8E0CC;color:#38352F;text-shadow:0 1px 0 rgba(255,255,255,.7);box-shadow:0 2px 3px rgba(56,53,47,.14),0 8px 12px rgba(56,53,47,.09),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(56,53,47,.09)">生成研学报告</button>
+  </div>
+  <div class="row">
+    <span class="row-label">#DED5BD（最安静，几乎融进底色）</span>
+    <button class="btn" style="background:#DED5BD;color:#38352F;text-shadow:0 1px 0 rgba(255,255,255,.7);box-shadow:0 2px 3px rgba(56,53,47,.14),0 8px 12px rgba(56,53,47,.09),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(56,53,47,.09)">生成研学报告</button>
+  </div>
+</section>
+
+<!-- ============ 禁用/危险 ============ -->
+<section class="sheet">
+  <div class="sheet-head">
+    <span class="sheet-name">附 · 禁用态 与 危险操作</span>
+  </div>
+  <div class="sheet-note">
+    禁用态不要用「整体降透明度」——那会把纸变薄、破坏质感。改为<b>内凹（无浮起）+ 文字换浅灰</b>。
+    危险操作不做红色实心按钮（低饱和体系里像警报灯），改成<b>纸底 + 朱红描边</b>，接近「盖章确认」。
+  </div>
+  <div class="row">
+    <button class="btn btn-disabled">未解锁</button>
+    <button class="btn" style="background:#FBF8F1;color:#A83C2E;border:1.5px solid #A83C2E;box-shadow:0 2px 3px rgba(168,60,46,.12),inset 0 1px 0 rgba(255,255,255,.9)">删除记录</button>
+  </div>
+</section>
+
+<footer>
+  <b>怎么判断</b>：① 看主按钮在纸上的「厚度方向」是否自然（右下投影、顶边高光、底边背光）；
+  ② 看白字/米白字在按钮上的可读性；
+  ③ 看这个绿/棕和纸底、和旁边的燕麦按钮放在一起，是不是同一个材质族。<br>
+  <b>还没定</b>：选择 A~E 中任意一组后，我会同步生成 <code>src/styles/variables.scss</code> 的对应令牌与 mixin，
+  并把全部 24 个按钮换成这套效果。
+</footer>
+
+</div>
+</body>
+</html>

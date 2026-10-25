@@ -1,0 +1,18 @@
+// ============================================
+// 纸张与墨感纹理（纯 SVG data URI，不增加任何图片文件）
+// 用法：@include paper-surface;（见 variables.scss）或直接 background-image: $texture-paper;
+//
+// 设计原则（别改坏）：
+// 1. 只做「暖墨色暗点」，不做灰阶双向噪点 —— 双向噪点会给整页蒙一层灰雾，
+//    纸感没出来、反而显脏。这里用 feColorMatrix 把噪声亮度映射成「稀疏 alpha」。
+// 2. 再用 feComponentTransfer 的 gamma 抬对比：多数像素几乎透明、少数捏成较实的斑点，
+//    这样「看得见颗粒」但整页平均明度几乎不变（实测底色 #F6F2E9 只压暗约 6/255）。
+//    直接线性加 alpha 会得到砂纸/电视雪花感（试过，更差）。
+// 3. 必须 stitchTiles='stitch' + 整数尺寸，否则平铺会出现接缝网格。
+// 4. 只铺「页面底」，不铺卡片 —— 白卡压在纸面上，明度差本身就是层次，再叠纹理就糊了。
+// 5. url 用双引号、SVG 属性用单引号：SCSS 单引号字符串遇到单引号会提前截断（踩过，
+//    结果是 class 名被切碎、整页纹理消失且不报错）。
+// ============================================
+
+// 宣纸纤维颗粒（180×180 无缝平铺，约 1.4KB）
+$texture-paper: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.52  0 0 0 0 0.48  0 0 0 0 0.40  0.26 0.34 0.12 0 -0.20'/><feComponentTransfer><feFuncA type='gamma' amplitude='1.9' exponent='1.4' offset='0'/></feComponentTransfer></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");

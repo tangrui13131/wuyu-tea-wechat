@@ -1,0 +1,31 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 构建产物（由 npm run build:weapp 生成，微信开发者工具导入 dist/）
+dist/
+dist_verify/
+dist_h5/
+.swc/
+
+# 日志与构建残留
+*.log
+build.log
+_nul
+
+# 本地验证用临时目录（H5 截图链路）
+.shots/
+.td-probe/
+*.tmp
+
+# 环境变量与本地密钥（见 AGENTS.md §9 安全红线）
+.env
+.env.*
+!.env.example
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

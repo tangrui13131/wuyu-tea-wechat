@@ -1,0 +1,48 @@
+@use '@/styles/variables.scss' as *;
+
+.tagSelector {
+    margin-bottom: $spacing-lg;
+
+    .selectorTitle {
+        display: block;
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
+        color: $color-text-primary;
+        margin-bottom: $spacing-md;
+    }
+
+    .tagList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+    }
+
+    .tagItem {
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-bg-card;
+        border: 1rpx solid $color-border;
+        border-radius: $radius-button;
+        cursor: pointer;
+        transition: all $transition-base;
+
+        &:active {
+            opacity: 0.7;
+            transform: scale(0.98);
+        }
+
+        &.tagItemSelected {
+            background-color: $color-primary;
+            border-color: $color-primary;
+
+            .tagText {
+                color: $color-text-white;
+            }
+        }
+    }
+
+    .tagText {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,29 @@
+@use '@/styles/variables.scss' as *;
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-circle;
+    flex-shrink: 0;
+}
+
+.avatarGlow {
+    box-shadow: 0 0 16rpx rgba($color-primary, 0.45);
+}
+
+.emoji {
+    line-height: 1;
+}
+
+/* 真实照片头像：容器裁圆，图片铺满 */
+.avatarImage {
+    overflow: hidden;
+    background: $color-bg-section;
+}
+
+.avatarPic {
+    width: 100%;
+    height: 100%;
+    display: block;
+}

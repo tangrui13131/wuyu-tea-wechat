@@ -1,0 +1,35 @@
+@use '@/styles/variables.scss' as *;
+
+.detail-page { @include paper-surface; min-height: 100vh; padding-bottom: 40rpx; }
+.detail-hero { padding: 48rpx 36rpx 40rpx; color: $color-text-white; }
+.detail-cat { display: inline-block; background: rgba(255, 255, 255, 0.2); padding: 6rpx 20rpx; border-radius: 24rpx; font-size: 22rpx; }
+.detail-name { display: block; font-size: 46rpx; font-weight: bold; margin-top: 16rpx; }
+.detail-summary { display: block; font-size: 26rpx; opacity: .9; margin-top: 12rpx; }
+.detail-quick { display: flex; margin-top: 30rpx; }
+.quick-item { flex: 1; text-align: center; border-right: 2rpx solid rgba(255, 255, 255, .25); }
+.quick-item:last-child { border-right: none; }
+.quick-num { display: block; font-size: 36rpx; font-weight: bold; }
+.quick-label { display: block; font-size: 22rpx; opacity: .85; margin-top: 4rpx; }
+
+.detail-section { background: $color-text-white; margin: 24rpx 30rpx; padding: 30rpx; border-radius: 20rpx; border: 1rpx solid $color-border-light; }
+.sec-title { display: block; font-size: 32rpx; font-weight: bold; color: $color-text-primary; margin-bottom: 18rpx; }
+.sec-text { display: block; font-size: 28rpx; color: $color-text-secondary; line-height: 1.7; }
+.tag-row { display: flex; flex-wrap: wrap; margin-top: 18rpx; }
+.tag { font-size: 22rpx; color: $color-primary; background: $color-route-tag; padding: 6rpx 18rpx; border-radius: 20rpx; margin: 0 12rpx 12rpx 0; }
+.info-row { display: flex; justify-content: space-between; padding: 16rpx 0; border-top: 2rpx solid $color-border-light; }
+.info-label { font-size: 26rpx; color: $color-text-tertiary; }
+.info-val { font-size: 26rpx; color: $color-text-primary; }
+
+.session-item { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 2rpx solid $color-border-light; }
+.session-date { display: block; font-size: 30rpx; color: $color-text-primary; font-weight: bold; }
+.session-time { display: block; font-size: 24rpx; color: $color-text-tertiary; margin-top: 6rpx; }
+.session-left { display: block; font-size: 22rpx; color: $color-warning; margin-top: 6rpx; }
+.book-mini {
+  margin: 0;
+  border-radius: $radius-button;
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 36rpx;
+  @include button-reset;
+  @include paper-btn-sage;
+}

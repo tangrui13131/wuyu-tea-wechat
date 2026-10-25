@@ -1,0 +1,538 @@
+// ============================================
+// 全局 SCSS 变量 - 槎山白茶文旅小程序
+// 视觉风格：新中式茶文化（国风精装版）+ 现代精致卡片式
+// 说明：本次升级在保留全部变量名的前提下，将调性调为更沉稳雅致的新中式园林
+//       （竹墨绿 + 精致暖金 + 宣纸米底），并补充国风质感与动效 token。
+//       凡引用本文件的页面会自动跟随新基调，无需逐页改色。
+// ============================================
+
+@use '@/styles/textures.scss' as tex;
+
+// 品牌主题色 - 竹墨绿（沉稳、雅致）
+$color-primary: #4A7C59;
+$color-primary-light: #6FAE73;
+$color-primary-dark: #2F5D3A;
+$color-primary-deep: #234A2C; // 更深一档，用于 hero 渐变底部
+
+// 竹墨绿 10 档色阶（h=137°, s=26%；step-7 与 $color-primary 同源，改主色时自动跟随）
+// 用途：浅底、描边、hover/active、图表、进度槽一律从这里取，
+//       不要再手写 rgba(74, 124, 89, α) 这种「手抄主色分量」的写法。
+$brand-1: #F2F7F4; // 极浅底：选中行 / 标签底
+$brand-2: #E2EEE5; // 浅底：强调卡底 / 进度槽
+$brand-3: #C8DFCF; // 轻描边 / 浅分割
+$brand-4: #ABCEB5; // 弱强调 / 图表次级
+$brand-5: #8BBB99; // 图表主色 / 浅色徽标
+$brand-6: #68A67A; // hover / 高亮边
+$brand-7: $color-primary; // 主色（= #4A7C59）
+$brand-8: #396044; // active / 按下态
+$brand-9: #284330; // 深底 / hero 下缘
+$brand-10: #1A2D20; // 墨底
+
+// 印泥红（第三色，只给印章 / 签章 / 落款用）
+// 不要拿它当强调色：它与暖金同属暖色，在按钮/图标上会和金色打架，
+// 页面里一旦出现两处以上朱红，国风的「克制」就没了。
+$color-seal: #A83C2E;
+$color-seal-deep: #8B2F24; // 压下时的深档 / 印泥边缘
+
+// 辅助色 - 精致暖金（国风点缀，替代原偏亮的土地色）
+$color-accent: #B98E4E;
+$color-accent-light: #D9BD8A;
+// 金色「文字」专用档：$color-accent(#B98E4E) 作文字只有 2.98:1（白卡）不达标，
+// 文字场景用它（白卡 5.22:1 / 米底 4.67:1）；渐变、描边、图标仍用 $color-accent 保持质感
+$color-accent-text: #8A6631;
+$color-accent-soft: #F3E9D6; // 金底色块（徽标/标签底）
+
+// 墨色 - 国风标题/强调
+$color-ink: #20261F;
+
+// 功能色（每个都带 light 浅底档 + active 按下档，避免页面里临时调 alpha）
+$color-success: #2BA471;
+$color-success-light: #EAF6F1; // 成功提示条 / 标签底
+$color-success-active: #23865D; // 按下 / 强强调
+$color-warning: #E37318;
+$color-warning-light: #FCF1E8;
+$color-warning-active: #BA5E14;
+$color-error: #E54545;
+$color-error-light: #FCECEC;
+$color-error-active: #BC3939;
+$color-info: #2F6B8F;
+$color-info-light: #EAF1F6;
+$color-info-active: #25536F;
+
+// 背景色（宣纸米底，比冷灰更有温度）
+$color-bg-page: #F6F2E9;
+$color-bg-card: #FFFFFF;
+$color-bg-section: #EFE9DC;
+$color-bg-hover: #F1ECE1;
+$color-bg-component: #FAF7F0; // 控件底：输入框、分段槽、进度槽（比 section 浅、比 card 暖）
+$color-mask: rgba(20, 26, 21, 0.55); // 半透明蒙层：用暖黑而非纯黑，压在白底上不发乌
+
+// 文本色
+$color-text-primary: #1F2A24;
+$color-text-secondary: #4A564E;
+// 三级文字：原 #8A938C 在宣纸米底上仅 2.83:1（WCAG 正文要 4.5:1），
+// 加深到 #66716A（米底 4.55:1 / 白卡 5.08:1），层级仍明显弱于 secondary
+$color-text-tertiary: #66716A;
+$color-text-white: #FFFFFF;
+$color-text-disabled: #C9CDD4;
+$color-text-on-dark: rgba(255, 255, 255, 0.92); // 深色 hero 上的文字
+
+// 边框色
+$color-border: #E7E0D2;
+$color-border-light: #F2EDE2;
+$color-divider: #F2EDE2;
+$color-border-gold: #D9BD8A; // 金描边
+$color-gold-line: rgba($color-accent, 0.12); // 极淡金分隔：卡片/容器描边
+$color-gold-line-strong: rgba($color-accent, 0.14); // 装饰竖条 / 强调边
+
+// 业务色
+$color-tea-badge: #FBF1E0;
+$color-route-tag: #EAF3EA;
+$color-npc-bg: #F5F0E6;
+
+// ---- 卡纸按钮专用色（2026-10 按钮材质化）----
+// 为什么按钮色比 $color-primary 深一档：按钮承担「按下决定」的重量，图标要透气；
+// 两者同色会让主操作和装饰性图标混为一谈。实测对比度见右侧注释。
+$color-btn-sage: #51684F; // 主按钮卡纸 · 艾草绿（白字 6.10:1 / 纯白 6.48:1）—— B 方案选定色，与参考图同族
+$color-btn-sage-edge: rgba(32, 42, 31, 0.3); // 主按钮贴地投影
+$color-btn-oat: #E5DEC9; // 次按钮卡纸（墨字 9.09:1）
+$color-btn-oat-deep: #DED5BD; // 次按钮描边 / 禁用底
+$color-on-btn: #FBF8F1; // 深底上的字（纸白，不用纯白）
+$color-on-oat: #38352F; // 燕麦纸上的字（略暖的墨，不用 #1F2A24）
+
+// ---- 国风渐变（统一复用，避免各页手写十六进制渐变）----
+$gradient-hero: linear-gradient(158deg, #234A2C 0%, #2F5D3A 42%, #4A7C59 100%);
+$gradient-hero-gold: linear-gradient(135deg, #2F5D3A 0%, #4A7C59 55%, #B98E4E 100%);
+$gradient-gold: linear-gradient(135deg, #D9BD8A 0%, #B98E4E 100%);
+$gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FBF8F1 100%);
+$gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
+
+// 玻璃拟态
+$glass-bg: rgba(255, 255, 255, 0.62);
+$glass-border: rgba(255, 255, 255, 0.55);
+
+// 屏幕适配（设计稿基准 750rpx）
+$screen-width: 750rpx;
+$page-padding: 32rpx;
+$page-spacing: 32rpx;
+$max-content-width: 686rpx;
+
+// 间距（8rpx 网格系统）
+$spacing-xs: 8rpx;
+$spacing-sm: 16rpx;
+$spacing-md: 24rpx;
+$spacing-lg: 32rpx;
+$spacing-xl: 48rpx;
+$spacing-xxl: 64rpx;
+$spacing-xxxl: 96rpx; // 区块之间的大段留白
+$spacing-huge: 160rpx; // 页面级章节分隔
+
+// 圆角（语义化，整体略增大更圆润现代）
+$radius-xs: 6rpx;
+$radius-sm: 12rpx;
+$radius-md: 16rpx;
+$radius-lg: 24rpx;
+$radius-xl: 32rpx;
+$radius-button: 999rpx; // 全胶囊按钮，更国风圆润
+// 卡片内操作按钮的专属圆角：胶囊放进卡片内部会像「两根扁香肠」，
+// 这里收成 20rpx 与卡片圆角（$radius-lg/24rpx）呼应——层次规则见 AGENTS §5「按钮形状分级」
+$radius-btn-card: 20rpx;
+$radius-round: $radius-button; // 同义别名（保留旧名，避免老页面 @use 报 undefined）
+$radius-circle: 50%; // 正圆：头像 / 圆点 / 状态灯，替代散落的手写 50%
+
+// 按钮高度
+$button-height-sm: 64rpx;
+$button-height-md: 84rpx;
+$button-height-lg: 96rpx;
+
+// 阴影（语义化，强化层次与"柔光"国风感）
+// 注意：色值一律走变量引用，不要写死 rgb 分量——
+//       历史上写成 rgba(47, 93, 58, α)（= 手抄的 $color-primary-dark），
+//       改主色时阴影不跟随，是最容易漏的一处颜色债。
+$shadow-card: 0 6rpx 20rpx rgba($color-primary-dark, 0.08);
+$shadow-card-hover: 0 12rpx 32rpx rgba($color-primary-dark, 0.14);
+$shadow-float: 0 10rpx 28rpx rgba($color-primary-dark, 0.12);
+$shadow-popup: 0 16rpx 48rpx rgba($color-ink, 0.22);
+$shadow-glow: 0 8rpx 28rpx rgba($color-accent, 0.22); // 金色辉光（强调卡/徽标）
+
+// ============================================
+// 研学主题卡（2026-10 审美升级：三套中国传统色）
+// 来源：设计稿「研学卡片审美升级设计」——茶文化=春辰绿/竹青、农耕体验=秋香/麦穗黄、
+// 红色教育=茜草红/赭石。只用于研学主题卡（components/ResearchCard）的顶部色带、
+// 状态印章、NPC 徽章与进度条，不要外溢到其他页面。
+// ============================================
+$study-paper: #F8F5EF; // 卡纸底：比纯白暖、比页面底亮（设计稿原话「告别刺眼纯白」）
+$study-edge: rgb(140, 128, 110); // 暖灰：卡片外圈描边 / 虚线分隔
+$study-edge-strong: rgb(120, 110, 95); // 色带下沿的双线分隔
+$study-shadow-ink: rgb(50, 42, 32); // 卡片投影用暖墨，不用纯黑（纯黑投影是 AI 味来源之一）
+$study-track: #E6DFD3; // 进度槽底（暖灰米）
+
+// 三层投影：外柔影 + 内侧高光 + 一圈暖描边，让卡「浮在纸上」。
+// 注意：这是「内容卡不加投影、只用发丝线」约定的**有意例外**——用户指定按该设计稿
+// 改版，且这张卡的纸底与页面底同为米色系，靠暖描边 + 柔影才分得出层次。
+$study-shadow-card:
+  0 12rpx 32rpx -8rpx rgba($study-shadow-ink, 0.08),
+  0 4rpx 12rpx -2rpx rgba($study-shadow-ink, 0.05),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.8),
+  0 0 0 2rpx rgba($study-edge, 0.15);
+$study-shadow-card-lift:
+  0 24rpx 48rpx -12rpx rgba($study-shadow-ink, 0.14),
+  0 8rpx 20rpx -4rpx rgba($study-shadow-ink, 0.08),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.9),
+  0 0 0 2rpx rgba($study-edge, 0.25);
+
+// 三主题色（色带渐变 / 墨色 / 进度条实色）；
+// 徽章底与描边不单列，直接 rgba($study-xxx-ink, .06 / .15) 从墨色推导，改色时自动跟随
+$study-tea-banner: linear-gradient(135deg, #E3ECE4 0%, #EBF1EC 100%);
+$study-tea-ink: #3F5E48;
+$study-tea-bar: #4A6B53;
+$study-farm-banner: linear-gradient(135deg, #EEE8D8 0%, #F4F0E4 100%);
+$study-farm-ink: #7D6034;
+$study-farm-bar: #8C7042;
+$study-red-banner: linear-gradient(135deg, #EFE2DF 0%, #F5ECEA 100%);
+$study-red-ink: #8C3B32;
+$study-red-bar: #8C3B32;
+
+// ============================================
+// 品质展示页（2026-10 审美升级）
+// 来源：设计稿「品质展示 - 槎山白茶审美升级」。与研学卡同一套纸色体系——
+// 纸底/暖墨/描边直接复用 $study-* 令牌（改一处两页同步），只补本页独有的
+// 对比条色（白茶绿渐变 / 绿茶秋香渐变）与金棕点缀。
+// ============================================
+$quality-paper: $study-paper; // 卡纸（= 设计稿 --card-paper）
+$quality-ink: $study-shadow-ink; // 投影暖墨（同研学卡，不用纯黑）
+$quality-track: #EBE5D9; // 对比条纸槽（比研学进度槽略浅，轨道更细）
+$quality-green: $study-tea-bar; // 槎山白茶（= 设计稿 --tea-green，与研学茶主题同源）
+$quality-green-light: #E6EFE8; // 白茶浅底：数字胶囊 / 风味标签底
+$quality-green-mid: #567A60; // 白茶条·头（渐变浅端）
+$quality-green-deep: #42614A; // 白茶条·尾（渐变深端）
+$quality-ochre: #B89768; // 普通绿茶（秋香暖褐；只做图形，作文字仅 2.3:1 不达标）
+$quality-ochre-mid: #CCB086; // 绿茶条·头（渐变浅端）
+$quality-ochre-deep: #B59465; // 绿茶条·尾（渐变深端）
+$quality-gold: $color-accent-text; // 点缀金（设计稿 #8C6B3F ≈ 项目文字金 #8A6631，取项目档）
+$quality-seal: $study-red-ink; // 「茶中珍品」印章标签（= 设计稿 #8C3B32，与研学红主题同源）
+
+// 两张卡的投影：外柔影 + 内侧高光 + 一圈描边，同 $study-shadow-card 的「有意例外」——
+// 卡纸与页面底同为米色系，靠描边 + 柔影才分得出层次
+$quality-shadow-card:
+  0 16rpx 40rpx -12rpx rgba($quality-ink, 0.08),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.85),
+  0 0 0 2rpx rgba($study-edge, 0.16);
+$quality-shadow-gold:
+  0 12rpx 32rpx -8rpx rgba($quality-ink, 0.07),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.85),
+  0 0 0 2rpx rgba($quality-gold, 0.22);
+
+// 品质展示页 · 地理参数区（2026-10 审美升级，设计稿「地理参数 - 槎山白茶审美升级」）
+// 主卡纸比通用卡纸深半档、四宫格用更白的小卡，两级纸色拉开层次；
+// 数值绿取设计稿竹青 #3F6148（比 $quality-green 深，白底上 6.4:1）。
+$quality-geo-board: #F5F0E6; // 主卡纸（设计稿 --card-outer）
+$quality-geo-cell: #FAF8F3; // 四宫格小卡（设计稿 --card-inner）
+$quality-geo-green: #3F6148; // 槎山竹青（坐标/参数数值、罗盘、竖条）
+$quality-geo-coord: linear-gradient(135deg, #E5EEE7 0%, #EEF3EF 100%); // 经纬通栏底（设计稿 135° 竹青渐变）
+$quality-geo-note: #EBE4D6; // 风物按语底基色（用时取 0.55 透明，见样式层）
+// 地理主卡 / 参数小卡的投影：同上「描边 + 柔影分层」思路
+$quality-geo-shadow-board:
+  0 16rpx 48rpx -12rpx rgba($quality-ink, 0.08),
+  0 4rpx 12rpx -2rpx rgba($quality-ink, 0.04),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.85),
+  0 0 0 2rpx rgba($study-edge, 0.2);
+$quality-geo-shadow-cell:
+  0 4rpx 12rpx rgba($quality-ink, 0.03),
+  inset 0 2rpx 0 rgba(255, 255, 255, 0.9),
+  0 0 0 2rpx rgba($study-edge, 0.14);
+
+// 字体大小
+$font-size-xs: 22rpx;
+$font-size-sm: 24rpx;
+$font-size-md: 28rpx;
+$font-size-lg: 32rpx;
+$font-size-xl: 36rpx;
+$font-size-xxl: 44rpx; // 原 40，标题略放大更有分量
+$font-size-display: 56rpx;
+
+// 行高（倍数，用于纯文本块）
+$line-height-tight: 1.3;
+$line-height-normal: 1.5;
+$line-height-loose: 1.8;
+
+// 行高（rpx 绝对值，与字号成对使用）
+// 页面里写 font-size + line-height 时优先查这张配对表，别再自己凑 1.3/1.5：
+// 22/32 · 24/40 · 28/44 · 32/48 · 36/52 · 44/60 · 56/76
+$leading-caption: 32rpx; // 配 $font-size-xs 22
+$leading-note: 40rpx; // 配 $font-size-sm 24
+$leading-body: 44rpx; // 配 $font-size-md 28
+$leading-emphasis: 48rpx; // 配 $font-size-lg 32
+$leading-title: 52rpx; // 配 $font-size-xl 36
+$leading-heading: 60rpx; // 配 $font-size-xxl 44
+$leading-hero: 76rpx; // 配 $font-size-display 56
+
+// 字重
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// 字体家族（唯一来源；app.scss 的 page 与各页统计数字都引用这里，不要再手写字体栈）
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+  'Hiragino Sans GB', sans-serif;
+$font-family-number: 'SF Pro Display', -apple-system, 'Helvetica Neue', Arial, sans-serif; // 统计数字，字形更整齐
+// 印章/落款专用：系统宋体（iOS 的 Songti SC、Android 的 Noto Serif CJK、Windows 的 SimSun），
+// 不引入字体文件、不调 wx.loadFontFace，离线也能出字形。
+$font-family-seal: 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'SimSun', serif;
+
+// 过渡动画（保留原变量，新增优雅缓动）
+$transition-fast: 0.15s ease;
+$transition-base: 0.25s ease;
+$transition-slow: 0.35s ease;
+
+// 动效缓动与时长（克制、有呼吸感的入场）
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+$dur-fast: 0.18s;
+$dur-base: 0.3s;
+$dur-slow: 0.45s;
+
+// 层级（统一阶梯，禁止页面里散落 z-index: $z-base/2/50/100/1000 这种魔法数字）
+$z-base: 1;
+$z-raised: 2;
+$z-sticky: 10;
+$z-header: 50;
+$z-overlay: 100; // 页内浮层：地图控件、悬浮按钮
+$z-mask: 900;
+$z-modal: 1000; // 全屏弹层（npc-chat 现用 1000）
+$z-toast: 1100;
+
+// ============================================
+// 常用 Mixin
+// ============================================
+
+// 宣纸底（底色 + 纤维颗粒）
+// 页面根容器统一用它，不要再写 `background: $color-bg-page;` —— 纯色平涂是「PPT 感」的主要来源。
+// 卡片不要套这个 mixin：白卡压在纸上才有「印」的层次。
+@mixin paper-surface {
+  background-color: $color-bg-page;
+  background-image: tex.$texture-paper;
+  background-repeat: repeat;
+}
+
+// 单行文本省略
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 多行文本省略
+@mixin text-ellipsis-multi($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// 水平垂直居中
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 横向滚动容器
+@mixin scroll-x-container {
+  white-space: nowrap;
+}
+
+// 横向滚动子项
+@mixin scroll-x-item($width) {
+  display: inline-block;
+  width: $width;
+  vertical-align: top;
+  white-space: normal;
+}
+
+// Button 样式重置
+// ⚠ 本 mixin 带 `margin: 0`（微信 button 默认 margin-left/right: auto，不清会是居中块）。
+// 因此调用方的 margin 必须写在 @include button-reset 之后，写在前面会被静默抹平——
+// 症状是「相邻按钮贴在一起」，且编译不报错。2026-10 已修 11 处历史 call site。
+@mixin button-reset {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  text-align: inherit;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &::after {
+    border: none;
+  }
+}
+
+// ---- 国风质感 Mixin ----
+
+// 通用卡片表面（白底 + 大圆角 + 极淡金描边）
+// 视觉取舍：2026-10 设计复审后统一去掉卡片投影 —— 页面底是暖米白、卡片是纯白，
+// 两者本身有足够明度差；再叠阴影就变成「每张卡都浮在纸上的卡片汤」。
+// 现在只用 1rpx 发丝线定边界，投影只留给真正的浮起层（$shadow-float）。
+@mixin card-surface {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  border: 1rpx solid $color-border-light;
+}
+
+// 国风茶卡（米白渐变 + 极淡金描边）
+@mixin tea-card {
+  background: $gradient-card;
+  border-radius: $radius-lg;
+  border: 1rpx solid $color-gold-line;
+}
+
+// ---- 页头（宣纸底）：大标题 + 一道短金线 ----
+// 设计取舍：彩色渐变 hero 只留给首页与 NPC 页（这两处需要「封面感」）；
+// 其余页面的页头回到纸面——无底色、无圆角、无投影，靠字号、字距和一道金线定调。
+@mixin masthead-title($size: 52rpx) {
+  display: block;
+  font-size: $size;
+  line-height: $size * 1.25;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 3rpx;
+  color: $color-text-primary;
+}
+
+@mixin masthead-rule($width: 56rpx) {
+  width: $width;
+  height: 3rpx;
+  margin: $spacing-md 0;
+  background: $color-accent;
+  border-radius: 2rpx;
+  opacity: 0.9;
+}
+
+// 发丝线分隔：inset 阴影比 border 更贴边、不占盒模型，适合列表项与卡片内的极细分隔
+@mixin hairline-bottom($color: $color-border-light) {
+  box-shadow: inset 0 -1rpx 0 $color;
+}
+
+@mixin hairline-top($color: $color-border-light) {
+  box-shadow: inset 0 1rpx 0 $color;
+}
+
+// 毛玻璃面板
+@mixin glass-panel {
+  background: $glass-bg;
+  backdrop-filter: blur(12rpx);
+  -webkit-backdrop-filter: blur(12rpx);
+  border: 1rpx solid $glass-border;
+}
+
+// 金描边
+@mixin gold-border {
+  border: 1rpx solid $color-border-gold;
+}
+
+// ---- 排版复合 Mixin（字号 + 行高成对，杜绝各页自己凑行高）----
+// 用法：.title { @include text-title; }  —— 需要改单侧时再单独覆盖 font-size / line-height
+@mixin text-caption {
+  font-size: $font-size-xs; // 22
+  line-height: $leading-caption; // 32
+}
+@mixin text-note {
+  font-size: $font-size-sm; // 24
+  line-height: $leading-note; // 40
+}
+@mixin text-body {
+  font-size: $font-size-md; // 28
+  line-height: $leading-body; // 44
+}
+@mixin text-emphasis {
+  font-size: $font-size-lg; // 32
+  line-height: $leading-emphasis; // 48
+}
+@mixin text-title {
+  font-size: $font-size-xl; // 36
+  line-height: $leading-title; // 52
+}
+@mixin text-heading {
+  font-size: $font-size-xxl; // 44
+  line-height: $leading-heading; // 60
+}
+@mixin text-hero {
+  font-size: $font-size-display; // 56
+  line-height: $leading-hero; // 76
+}
+
+// 按压反馈（克制回弹）
+// 注意：`:active` 不在 WXSS 支持的选择器列表里，真机上可能不生效（见 AGENTS.md §8）。
+// 卡纸按钮改用 `<View hoverClass>` 做按下态，不再依赖这个 mixin。
+@mixin press-fx {
+  transition: transform $dur-fast $ease-out, box-shadow $dur-fast $ease-out;
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+// ---- 卡纸按钮（手作纸质感）----
+// 三条设计原则（改之前先读）：
+// 1. 纯色 + 单一光源：光固定从左上来 → 右下两段投影、顶边内侧受光、底边内侧背光。
+// 2. 不用渐变：卡纸感来自「光影方向一致」，一加渐变立刻退回通用 AI 生成的塑料质感。
+// 3. 字影只加一层、且只在大字号用：24~28rpx 的字加双向 1px 字影会糊成脏边。
+@mixin paper-btn-sage {
+  background: $color-btn-sage;
+  color: $color-on-btn;
+  box-shadow:
+    0 3rpx 4rpx $color-btn-sage-edge,
+    // 贴地的那一道
+    0 10rpx 16rpx rgba(32, 42, 31, 0.22),
+    // 体积感
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.28),
+    // 顶边受光（卡纸立起来全靠这一条）
+    inset 0 -3rpx 0 rgba(0, 0, 0, 0.22); // 底边背光
+}
+
+@mixin paper-btn-oat {
+  background: $color-btn-oat;
+  color: $color-on-oat;
+  border: 1rpx solid rgba(56, 53, 47, 0.12); // 燕麦色和米白底太近，靠一条裁切边定形
+  box-shadow:
+    0 3rpx 4rpx rgba(56, 53, 47, 0.2),
+    0 10rpx 16rpx rgba(56, 53, 47, 0.12),
+    inset 0 2rpx 0 rgba(255, 255, 255, 0.82),
+    inset 0 -3rpx 0 rgba(56, 53, 47, 0.12);
+}
+
+// 禁用：不用 opacity（降低透明度=把纸变薄），改成内凹 + 无浮起
+@mixin paper-btn-disabled {
+  background: $color-btn-oat-deep;
+  color: $color-text-tertiary;
+  box-shadow: inset 0 2rpx 4rpx rgba(56, 53, 47, 0.14);
+}
+
+// 按下态：卡片式按住会「陷进去」一点，靠 hoverClass 触发（微信与 H5 都支持）
+@mixin paper-btn-press {
+  transition: transform $dur-fast $ease-out;
+  transform: scale(0.985);
+}
+
+// 照片上的控件（深色玻璃胶囊）
+// 实拍底图的明暗不可控：白色半透明胶囊落在亮雾/高光叶上会被吃掉（对比度掉到 3:1 以下），
+// 所以统一「压暗的玻璃 + 细白边」——不争抢画面，文字稳定在 4.5:1 以上。
+// 用途：hero 顶部的状态胶囊、扫码验真、体验解锁这类浮在照片上的次操作。
+@mixin glass-pill {
+  background: rgba(16, 26, 19, 0.42);
+  color: $color-text-white;
+  border: 1rpx solid rgba(255, 255, 255, 0.26);
+  box-shadow: inset 0 1rpx 0 rgba(255, 255, 255, 0.12);
+}

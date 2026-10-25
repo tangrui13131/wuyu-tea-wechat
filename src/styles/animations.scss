@@ -1,0 +1,122 @@
+// ============================================
+// 全局动效库 - 槎山白茶文旅小程序
+// 设计原则：克制、有呼吸感。以"淡入上移 / 轻回弹 / 柔和浮动"为主，
+//           杜绝花哨旋转闪烁。供各页面（含 CSS Module）以全局 keyframes 名引用。
+// 引入方式：在 app.scss 中 @use '@/styles/animations.scss';（本文件仅含
+//           @keyframes 与极少量全局工具类，不产生副作用）。
+// ============================================
+@use '@/styles/variables.scss' as *;
+
+// ---------- 入场：淡入上移（区块/卡片列表默认用）----------
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---------- 纯淡入（轻量元素）----------
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ---------- 缩放淡入（弹窗 / 抽屉）----------
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ---------- 带回弹的弹入（强调卡片 / 徽标）----------
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// ---------- 骨架屏微光（shimmer）----------
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// ---------- 装饰元素柔和浮动（茶叶 / 光斑）----------
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14rpx) rotate(3deg);
+  }
+}
+
+// ---------- 呼吸脉冲（状态点 / 提示）----------
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// ---------- 旋转（loading）----------
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ---------- 全局工具类（可选，直接在 className 使用）----------
+.anim-fade-up {
+  animation: fadeInUp $dur-base $ease-out both;
+}
+.anim-fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+.anim-pop-in {
+  animation: popIn 0.42s $ease-out both;
+}
+.anim-scale-in {
+  animation: scaleIn 0.42s $ease-out both;
+}
+.anim-float {
+  animation: floatY 4.5s ease-in-out infinite;
+}
+.anim-pulse {
+  animation: pulseSoft 2.4s ease-in-out infinite;
+}
+.anim-spin {
+  animation: spin 0.9s linear infinite;
+}

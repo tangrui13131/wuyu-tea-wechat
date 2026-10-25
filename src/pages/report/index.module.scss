@@ -1,0 +1,336 @@
+@use '@/styles/variables.scss' as *;
+
+.reportPage {
+    padding: $spacing-lg $page-padding;
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xxl;
+    text-align: center;
+
+    .icon {
+        font-size: 120rpx;
+        margin-bottom: $spacing-lg;
+    }
+
+    .title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-md;
+    }
+
+    .desc {
+        font-size: $font-size-md;
+        color: $color-text-secondary;
+    }
+}
+
+/* ===== 研学报告页（调研刚需②：PDF 报告 + 电子证书） ===== */
+/* 概览卡：原来是整块绿色渐变，和首页 hero 抢同一个「视觉第一眼」；
+   二级页统一用宣纸底 + 金线，数字用主色，重心留给内容本身 */
+.overview {
+    position: relative;
+    padding: $spacing-lg;
+    background: $color-bg-card;
+    border: 1rpx solid $color-gold-line-strong;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-lg;
+}
+
+.ovTitle {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    letter-spacing: 1rpx;
+    margin-bottom: $spacing-md;
+}
+
+.ovRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ovItem {
+    flex: 1;
+    align-items: center;
+}
+
+.ovNum {
+    display: block;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    text-align: center;
+}
+
+.ovLabel {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    text-align: center;
+    margin-top: $spacing-xs;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    padding: $spacing-xs;
+    margin-bottom: $spacing-lg;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    padding: $spacing-sm 0;
+    border-radius: $radius-sm;
+}
+
+.tabActive {
+    /* 选中的 Tab 用浅茶底 + 主色字：整块深绿在三个 Tab 里过于抢眼 */
+    background: $brand-1;
+    color: $color-primary-dark;
+    font-weight: $font-weight-semibold;
+}
+
+.formCard {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+}
+
+.formTitle {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+}
+
+.fieldRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: $spacing-md;
+}
+
+.fieldLabel {
+    width: 160rpx;
+    font-size: $font-size-md;
+    color: $color-text-primary;
+}
+
+.input {
+    flex: 1;
+    font-size: $font-size-md;
+    padding: $spacing-sm;
+    background-color: $color-bg-page;
+    border-radius: $radius-sm;
+}
+
+.formTip {
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-primary, 0.08);
+    border-radius: $radius-sm;
+    margin-bottom: $spacing-md;
+}
+
+.formTipText {
+    font-size: $font-size-sm;
+    color: $color-primary-dark;
+}
+
+// 两个批量操作按钮：主/次叠放，共用高度与字号
+// 注意 @include button-reset 里带 margin: 0，margin-top 必须写在它后面，否则被抹平
+.primaryBtn,
+.secondaryBtn {
+    @include button-reset;
+    height: 108rpx;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    border-radius: $radius-button;
+}
+
+.primaryBtn {
+    margin-top: $spacing-lg;
+    @include paper-btn-sage;
+}
+
+.secondaryBtn {
+    // 卡纸带投影，间隔太小会让两块糊成一片，这里按按钮高度的约 30% 留白
+    margin-top: $spacing-lg;
+    @include paper-btn-oat;
+}
+
+.hint {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    line-height: $line-height-normal;
+    margin-top: $spacing-md;
+}
+
+.moduleItem {
+    padding: $spacing-md;
+    border: 2rpx solid $color-border;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-sm;
+}
+
+.moduleActive {
+    border-color: $color-primary;
+    background: rgba($color-primary, 0.06);
+}
+
+.moduleHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.moduleTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+    flex: 1;
+    min-width: 0;
+}
+
+.moduleName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+}
+
+.moduleMeta {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+}
+
+.moduleStandard {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    line-height: $line-height-normal;
+    margin-top: $spacing-xs;
+}
+
+.recordItem {
+    padding: $spacing-md;
+    background-color: $color-bg-page;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-sm;
+}
+
+.recordTitle {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-text-primary;
+}
+
+.recordTime {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    margin-top: $spacing-xs;
+}
+
+// 好茶带回家（研学 → 卖茶闭环）
+.homeTea {
+    margin: $spacing-lg $spacing-md;
+    padding: $spacing-lg;
+    background-color: $color-bg-page;
+    border-radius: $radius-lg;
+}
+
+.homeTeaHead {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+}
+
+.homeTeaTitle {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+}
+
+.homeTeaSub {
+    display: block;
+    margin-top: $spacing-xs;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+}
+
+.homeTeaScroll {
+    margin-top: $spacing-md;
+    white-space: nowrap;
+    // Taro 横滑容器：关闭 flex 换行以保证横向滚动
+    display: flex;
+    flex-direction: row;
+}
+
+.homeTeaCard {
+    display: inline-flex;
+    flex-direction: column;
+    width: 220rpx;
+    margin-right: $spacing-md;
+    flex-shrink: 0;
+}
+
+.homeTeaThumb {
+    width: 220rpx;
+    height: 220rpx;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeTeaEmoji {
+    font-size: 96rpx;
+}
+
+.homeTeaName {
+    display: block;
+    margin-top: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.homeTeaPrice {
+    display: block;
+    margin-top: 4rpx;
+    font-size: $font-size-sm;
+    color: $color-error;
+    font-weight: $font-weight-bold;
+}
+
+/* ===================== 纸感配件（印章 / 线描） ===================== */
+/* 朱文印钉在成果卡右上角：与 ovTitle 同一行区，但不压数字。
+   同样用两级选择器，避开 Seal 组件 .seal 的 position:relative */
+.overview .ovSeal {
+    position: absolute;
+    right: $spacing-lg;
+    top: $spacing-lg;
+}
+
+/* 页脚水波：只当收尾，透明度压到 26%，不能比内容更显眼 */
+.footerMotif {
+    margin: $spacing-lg $page-padding $spacing-xl;
+}

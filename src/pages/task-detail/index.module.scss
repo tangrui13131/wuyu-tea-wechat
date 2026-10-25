@@ -1,0 +1,380 @@
+@use '@/styles/variables.scss' as *;
+
+.taskDetailPage {
+    min-height: 100vh;
+    @include paper-surface;
+    padding-bottom: $spacing-xl;
+}
+
+.loadingText {
+    display: block;
+    text-align: center;
+    margin-top: 200rpx;
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+}
+
+// ---------- 空态 ----------
+.emptyBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 160rpx $spacing-lg 0;
+}
+
+.emptyIcon {
+    font-size: 80rpx;
+    margin-bottom: $spacing-md;
+}
+
+.emptyTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+}
+
+.emptyDesc {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    text-align: center;
+    line-height: 1.6;
+}
+
+// ---------- 任务概览 ----------
+.heroCard {
+    margin: $spacing-md;
+    padding: $spacing-lg;
+    background: $color-text-white;
+    border-radius: $radius-lg;
+    border: 1rpx solid $color-border-light;
+}
+
+.tagRow {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: $spacing-sm;
+}
+
+.themeTag,
+.diffTag,
+.typeTag {
+    padding: 0 14rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+    font-size: $font-size-xs;
+    border-radius: 18rpx;
+    margin-right: $spacing-xs;
+    color: $color-text-white;
+}
+
+.themeTag {
+    background: $color-primary;
+}
+
+.typeTag {
+    background: $color-text-tertiary;
+}
+
+.diff_easy {
+    background: $color-primary;
+}
+
+.diff_medium {
+    background: $color-warning;
+}
+
+.diff_hard {
+    background: $color-error;
+}
+
+.taskTitle {
+    display: block;
+    font-size: 40rpx;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+}
+
+.taskDesc {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+}
+
+.progressRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-md;
+}
+
+.progressBar {
+    flex: 1;
+    height: 12rpx;
+    background: $color-bg-component;
+    border-radius: 6rpx;
+    overflow: hidden;
+    margin-right: $spacing-sm;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, $color-primary-light 0%, $color-primary 100%);
+    border-radius: 6rpx;
+}
+
+.progressText {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+}
+
+.rewardRow {
+    display: flex;
+    align-items: center;
+    padding-top: $spacing-sm;
+    border-top: 1rpx solid $color-border-light;
+}
+
+.rewardIcon {
+    font-size: 32rpx;
+    margin-right: $spacing-xs;
+}
+
+.rewardText {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+}
+
+// ---------- 引导 NPC ----------
+.npcCard {
+    display: flex;
+    align-items: center;
+    margin: 0 $spacing-md $spacing-md;
+    padding: $spacing-md;
+    background: $color-text-white;
+    border-radius: $radius-lg;
+    border: 1rpx solid $color-border-light;
+}
+
+.npcAvatar {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: $radius-circle;
+    background: linear-gradient(135deg, $color-primary-light 0%, $color-primary 100%);
+    @include flex-center;
+    margin-right: $spacing-sm;
+}
+
+.npcAvatarText {
+    font-size: 36rpx;
+}
+
+.npcInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.npcName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+}
+
+.npcTitle {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: 2rpx;
+}
+
+.npcAction {
+    font-size: $font-size-sm;
+    color: $color-primary;
+}
+
+// ---------- 步骤 ----------
+.sectionTitle {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin: 0 $spacing-md $spacing-sm;
+}
+
+.stepsWrap {
+    margin: 0 $spacing-md;
+}
+
+.stepItem {
+    background: $color-text-white;
+    border-radius: $radius-lg;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+    border: 1rpx solid $color-border-light;
+}
+
+.stepItemDone {
+    background: $brand-1;
+}
+
+.stepHead {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+}
+
+.stepNo {
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: $radius-circle;
+    background: $color-bg-component;
+    @include flex-center;
+    margin-right: $spacing-sm;
+}
+
+.stepNoDone {
+    background: $color-primary;
+}
+
+.stepNoText {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    font-weight: $font-weight-semibold;
+}
+
+.stepNoDone .stepNoText {
+    color: $color-text-white;
+}
+
+.stepTitle {
+    flex: 1;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+}
+
+.stepDesc {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.6;
+    margin-bottom: $spacing-sm;
+}
+
+.guidanceBox {
+    padding: $spacing-sm;
+    background: $color-bg-component;
+    border-left: 6rpx solid $color-primary;
+    border-radius: $radius-sm;
+    margin-bottom: $spacing-sm;
+}
+
+.guidanceText {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    line-height: 1.7;
+}
+
+.guidanceFrom {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    text-align: right;
+    margin-top: $spacing-xs;
+}
+
+.stepMeta {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-sm;
+}
+
+.metaChip {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    background: $color-bg-component;
+    padding: 4rpx 12rpx;
+    border-radius: 16rpx;
+    margin-right: $spacing-xs;
+    margin-bottom: $spacing-xs;
+}
+
+.stepBtn {
+    height: 64rpx;
+    border-radius: $radius-button;
+    @include flex-center;
+    @include button-reset;
+    @include paper-btn-sage;
+}
+
+.stepBtnDone {
+    @include paper-btn-oat;
+}
+
+.stepBtnText {
+    font-size: $font-size-sm;
+    color: $color-text-white;
+    font-weight: $font-weight-semibold;
+}
+
+.stepBtnDone .stepBtnText {
+    color: $color-text-tertiary;
+}
+
+// ---------- 知识卡片 ----------
+.knowledgeCard {
+    margin: $spacing-md;
+    padding: $spacing-lg;
+    background: linear-gradient(135deg, $brand-1 0%, $brand-2 100%);
+    border-radius: $radius-lg;
+}
+
+.knowledgeHead {
+    display: flex;
+    align-items: center;
+    gap: 10rpx;
+    margin-bottom: $spacing-sm;
+}
+
+.knowledgeTitle {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+}
+
+.knowledgeContent {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.8;
+    margin-bottom: $spacing-xs;
+}
+
+.knowledgeSource {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-sm;
+}
+
+.knowledgeReward {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+}
+
+// ---------- 底部说明 ----------
+.footTip {
+    padding: 0 $spacing-lg $spacing-lg;
+}
+
+.footTipText {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    line-height: 1.6;
+}

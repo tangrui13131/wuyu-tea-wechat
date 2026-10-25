@@ -1,0 +1,450 @@
+@use '@/styles/variables.scss' as *;
+
+// ============================================
+// 研学首页 - 精装 2.0
+// 本轮修正（对标成熟小程序）：
+// 1. 彩色 emoji 图标 → 统一线性 SVG 图标（单色描边 1.8，风格统一）
+// 2. 模糊光斑装饰（radial-gradient 大色块）→ 清晰几何细线装饰
+// 3. AI 卡片满宽渐变条 → 白底轻头部 + 主色线性图标
+// ============================================
+
+// ---- 线性图标（SVG data URI，统一 stroke 1.8 / 圆角端点）----
+$icon-book: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A7C59' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7.5' height='7.5' rx='1.8'/%3E%3Crect x='13.5' y='3' width='7.5' height='7.5' rx='1.8'/%3E%3Crect x='3' y='13.5' width='7.5' height='7.5' rx='1.8'/%3E%3Crect x='13.5' y='13.5' width='7.5' height='7.5' rx='1.8'/%3E%3C/svg%3E");
+$icon-doc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A7C59' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3h7l4 4v14H7z'/%3E%3Cpath d='M14 3v4h4'/%3E%3Cpath d='M10 12h5M10 16h5'/%3E%3C/svg%3E");
+$icon-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A7C59' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4L2.5 8.5 12 13l9.5-4.5L12 4z'/%3E%3Cpath d='M6.5 11v4.2c0 1.4 2.4 2.8 5.5 2.8s5.5-1.4 5.5-2.8V11'/%3E%3Cpath d='M21.5 8.5V13'/%3E%3C/svg%3E");
+$icon-cal: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A7C59' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15.5' rx='2'/%3E%3Cpath d='M3.5 10h17'/%3E%3Cpath d='M8.5 3v4M15.5 3v4'/%3E%3Cpath d='M7.5 14.5h3M7.5 17.5h5'/%3E%3C/svg%3E");
+$icon-sparkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A7C59' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7L12 3.5z'/%3E%3C/svg%3E");
+$icon-bubble: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A938C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.5 8.5 0 01-8.5 8.5c-1.5 0-2.9-.35-4.1-1L3 20l1.1-4.4A8.5 8.5 0 1121 11.5z'/%3E%3C/svg%3E");
+
+.study-page {
+    min-height: 100vh;
+    @include paper-surface;
+    padding-bottom: $spacing-xxl;
+}
+
+/* ===================== 页头（宣纸底 · 大标题 · 短金线） =====================
+ * 设计取舍（2026-10 复审）：原来这里是绿色渐变 hero，但首页、研学、品质、我的
+ * 四个 Tab 都套同一个绿 hero，一眼就是「模板复用」。现在 hero 只留给首页与 NPC 页，
+ * 研学页回到纸面；右上角的双细线圆环保留（它是这页的几何签名），只把白色描边
+ * 换成极淡金，压在米白底上像一枚水印，而不是贴在色块上的装饰。
+ * ============================================================================ */
+.study-header {
+    position: relative;
+    padding: 56rpx $page-padding 8rpx;
+    margin-bottom: $spacing-lg;
+    overflow: hidden;
+}
+
+.heroRing {
+    position: absolute;
+    top: -70rpx;
+    right: -50rpx;
+    width: 300rpx;
+    height: 300rpx;
+    border: 2rpx solid rgba($color-accent, 0.16);
+    border-radius: $radius-circle;
+    pointer-events: none;
+}
+
+.heroRingSm {
+    position: absolute;
+    top: 52rpx;
+    right: 150rpx;
+    width: 90rpx;
+    height: 90rpx;
+    border: 2rpx solid rgba($color-accent, 0.1);
+    border-radius: $radius-circle;
+    pointer-events: none;
+}
+
+// 一枚清晰的金点点缀（克制）
+.heroDot {
+    position: absolute;
+    top: 76rpx;
+    right: 118rpx;
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: $radius-circle;
+    background: rgba($color-accent, 0.85);
+    pointer-events: none;
+}
+
+/* 国风徽标：金色描边小签，压在纸上而不是压在色块上 */
+.heroBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8rpx 20rpx;
+    margin-bottom: $spacing-md;
+    background: rgba($color-accent, 0.07);
+    border: 1rpx solid $color-gold-line-strong;
+    border-radius: $radius-round;
+
+    text {
+        font-size: $font-size-xs;
+        color: $color-accent-text;
+        letter-spacing: 2rpx;
+    }
+}
+
+.study-title {
+    @include masthead-title(56rpx);
+    letter-spacing: 6rpx;
+}
+
+.study-rule {
+    @include masthead-rule(72rpx);
+}
+
+.study-subtitle {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    letter-spacing: 1rpx;
+    line-height: $line-height-normal;
+}
+
+/* ===================== 区块标题（国风竖线） ===================== */
+.sectionTitle {
+    position: relative;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    /* 区块之间留一口气：原来只有下边距，标题紧贴上一块卡片 */
+    margin: $spacing-xl $page-padding $spacing-md;
+    padding-left: 20rpx;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8rpx;
+        bottom: 8rpx;
+        width: 8rpx;
+        border-radius: 4rpx;
+        background: $gradient-gold;
+    }
+}
+
+/* ===================== 功能入口（2×2 网格） ===================== */
+.entryGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin: 0 $page-padding $spacing-xl;
+}
+
+.entryCard {
+    flex: 1 1 calc(50% - #{$spacing-md} / 2);
+    min-width: 300rpx;
+    padding: $spacing-lg $spacing-md;
+    border-radius: $radius-lg;
+    border: 1rpx solid $color-gold-line-strong;
+    background: $color-bg-card;
+    /* 入口卡按下态靠 hoverClass 触发（真机 :active 不可靠），见 AGENTS §8 第 11 条 */
+    animation: fadeInUp 0.5s $ease-out both;
+
+    &:nth-child(1) { animation-delay: 0.06s; }
+    &:nth-child(2) { animation-delay: 0.12s; }
+    &:nth-child(3) { animation-delay: 0.18s; }
+    &:nth-child(4) { animation-delay: 0.24s; }
+}
+
+/* 图标托 + 线性图标 */
+.entryIconWrap {
+    width: 76rpx;
+    height: 76rpx;
+    border-radius: 22rpx;
+    margin-bottom: $spacing-sm;
+    @include flex-center;
+    box-shadow: $shadow-float;
+}
+
+.entryIcon {
+    width: 40rpx;
+    height: 40rpx;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+// 图标托底色（同色系渐变，避免杂色）
+/* 四个服务入口原本各用一套绿/金渐变，四种颜色并排就是「配色糖纸」；
+   统一成浅茶底 + 金线 + 主色描边图标：颜色只区分状态，不区分入口 */
+.iconGreen,
+.iconGold,
+.iconDeep,
+.iconLight {
+    background: $brand-1;
+    border: 1rpx solid $color-gold-line;
+}
+
+// 线性图标（白色描边，风格统一）
+.iconBook { background-image: $icon-book; }
+.iconDoc  { background-image: $icon-doc; }
+.iconCap  { background-image: $icon-cap; }
+.iconCal  { background-image: $icon-cal; }
+
+.entryTitle {
+    display: block;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+}
+
+.entryDesc {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: 4rpx;
+}
+
+/* ===================== AI 面板卡片（白底轻头部） ===================== */
+.aiCard {
+    margin: 0 $page-padding $spacing-xl;
+    border-radius: $radius-lg;
+    border: 1rpx solid $color-gold-line-strong;
+    background: $color-bg-card;
+    overflow: hidden;
+    animation: fadeInUp 0.5s $ease-out 0.3s both;
+}
+
+.aiCardHead {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md $spacing-lg;
+    background: $color-bg-card;
+    border-bottom: 1rpx solid $color-border-light;
+
+    .aiHeadIcon {
+        flex-shrink: 0;
+        width: 40rpx;
+        height: 40rpx;
+        background: $icon-sparkle center / contain no-repeat;
+    }
+
+    .aiTitle {
+        flex: 1;
+        font-size: $font-size-md;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+    }
+
+    .aiToggle {
+        display: flex;
+        align-items: center;
+        gap: 6rpx;
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+
+        .aiArrow {
+            font-size: $font-size-sm;
+            line-height: 1;
+            transition: transform $dur-base $ease-out;
+
+            &.aiArrowOpen {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+.aiBody {
+    padding: $spacing-lg;
+    animation: fadeIn 0.28s $ease-out both;
+}
+
+/* ---------- 对话区 ---------- */
+.chatScroll {
+    min-height: 220rpx;
+    max-height: 760rpx;
+    overflow-y: auto;
+    background: $color-bg-component;
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+    border: 1rpx solid $color-border-light;
+}
+
+.chatEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-lg 0;
+
+    .chatEmptyIcon {
+        width: 88rpx;
+        height: 88rpx;
+        margin-bottom: $spacing-sm;
+        background: $icon-bubble center / contain no-repeat;
+        opacity: 0.55;
+    }
+
+    .chatEmptyText {
+        font-size: $font-size-sm;
+        color: $color-text-tertiary;
+        text-align: center;
+        line-height: $line-height-loose;
+    }
+}
+
+.msgRow {
+    display: flex;
+    margin-bottom: $spacing-md;
+    animation: fadeInUp 0.32s $ease-out both;
+
+    &.msgRowUser { justify-content: flex-end; }
+    &.msgRowAi   { justify-content: flex-start; }
+}
+
+.bubbleUser {
+    max-width: 80%;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 16rpx 16rpx 4rpx 16rpx;
+    background: $gradient-hero;
+    box-shadow: $shadow-float;
+
+    text {
+        font-size: $font-size-sm;
+        color: $color-text-white;
+        line-height: $line-height-loose;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+}
+
+.bubbleAi {
+    max-width: 85%;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 4rpx 16rpx 16rpx 16rpx;
+    background: $color-bg-card;
+    border: 1rpx solid $color-border;
+
+    text {
+        font-size: $font-size-sm;
+        color: $color-text-primary;
+        line-height: $line-height-loose;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+}
+
+.bubbleTyping {
+    padding: $spacing-sm $spacing-md;
+    border-radius: 4rpx 16rpx 16rpx 16rpx;
+    background: $color-bg-card;
+    border: 1rpx solid $color-border;
+
+    text {
+        font-size: $font-size-sm;
+        color: $color-primary;
+    }
+}
+
+/* ---------- 输入区 ---------- */
+.inputRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: $spacing-sm;
+}
+
+.aiInput {
+    flex: 1;
+    background-color: $color-bg-page;
+    border: 1rpx solid $color-border;
+    border-radius: $radius-md;
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-md;
+    min-height: 84rpx;
+    max-height: 220rpx;
+    line-height: $line-height-normal;
+}
+
+.sendBtn {
+    flex: 0 0 auto;
+    min-width: 132rpx;
+    height: 84rpx;
+    border-radius: $radius-button;
+    @include button-reset;
+    @include paper-btn-sage;
+
+    text {
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.sendBtnDisabled {
+    opacity: 0.55;
+    box-shadow: none;
+}
+
+/* ---------- 错误重试 ---------- */
+.errorBox {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    background: rgba($color-error, 0.06);
+    border: 1rpx solid rgba($color-error, 0.18);
+    border-radius: $radius-md;
+    text-align: center;
+
+    .errorText {
+        display: block;
+        font-size: $font-size-sm;
+        color: $color-error;
+        margin-bottom: $spacing-sm;
+    }
+}
+
+.retryBtn {
+    display: inline-flex;
+    padding: 10rpx $spacing-lg;
+    border-radius: $radius-button;
+    @include button-reset;
+    @include paper-btn-oat;
+
+    text {
+        font-size: $font-size-sm;
+        color: $color-on-oat;
+    }
+}
+
+/* ===================== 主题列表 =====================
+ * 卡片入场改由 <Reveal> 逐张错峰（进视口才播），容器不再整块 fadeInUp，
+ * 否则外层一起动 + 内层又各自动，会糊成一团。卡间距由 ResearchCard 自己的
+ * margin-bottom 控制。 */
+.themeList {
+    margin: 0 $page-padding;
+}
+
+/* ---------- 空状态 ---------- */
+.emptyBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-xl 0;
+    @include card-surface;
+    animation: fadeInUp 0.4s $ease-out both;
+
+    .emptyIcon {
+        width: 88rpx;
+        height: 88rpx;
+        margin-bottom: $spacing-sm;
+        background: $icon-bubble center / contain no-repeat;
+        opacity: 0.55;
+    }
+
+    .emptyText {
+        font-size: $font-size-sm;
+        color: $color-text-tertiary;
+        text-align: center;
+        line-height: $line-height-normal;
+    }
+}
+
+/* 输入框 placeholder */
+.ai-ph {
+    font-size: $font-size-sm;
+    color: $color-text-disabled;
+}

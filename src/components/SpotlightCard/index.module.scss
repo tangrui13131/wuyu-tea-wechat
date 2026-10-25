@@ -1,0 +1,29 @@
+@use '@/styles/variables.scss' as *;
+
+// 触屏高光卡片：手指按下时在触点位置透出一圈柔光，抬起淡出
+.root {
+    position: relative;
+    overflow: hidden;
+
+    // 按下时的轻微「压下去」反馈，配合高光给出可点感
+    transition: transform 0.18s ease;
+
+    &.pressed {
+        transform: scale(0.985);
+    }
+}
+
+.glow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.32s ease;
+}
+
+.root.pressed .glow {
+    opacity: 1;
+}

@@ -1,0 +1,173 @@
+@use '@/styles/variables.scss' as *;
+
+.routeCard {
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    margin-bottom: $spacing-lg;
+
+    .routeCover {
+        width: 100%;
+        height: 200rpx;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding: $spacing-lg;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: -40rpx;
+            top: -40rpx;
+            width: 200rpx;
+            height: 200rpx;
+            border-radius: $radius-circle;
+            background: rgba(255, 255, 255, 0.12);
+        }
+    }
+
+    .routeCoverPic {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 底部压深，保证白色标题在浅色图上也读得清 */
+    .routeCoverMask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.45) 100%);
+    }
+
+    .routeCoverEmoji {
+        position: absolute;
+        right: $spacing-lg;
+        top: $spacing-md;
+        font-size: 72rpx;
+        line-height: 1;
+        opacity: 0.92;
+    }
+
+    .routeCoverName {
+        position: relative;
+        z-index: $z-base;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $color-text-white;
+        text-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.25);
+    }
+
+    .routeContent {
+        padding: $spacing-lg;
+    }
+
+    .routeName {
+        display: block;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-sm;
+    }
+
+    .routeDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-secondary;
+        margin-bottom: $spacing-md;
+        @include text-ellipsis-multi(2);
+    }
+
+    .routeMeta {
+        display: flex;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-md;
+
+        .metaItem {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+        }
+
+        .metaLabel {
+            font-size: $font-size-sm;
+            color: $color-text-tertiary;
+        }
+
+        .metaValue {
+            font-size: $font-size-sm;
+            color: $color-text-primary;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    .routeTags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-md;
+
+        .routeTag {
+            padding: $spacing-xs $spacing-sm;
+            background-color: $color-route-tag;
+            border-radius: $radius-xs;
+
+            .routeTagText {
+                font-size: $font-size-xs;
+                color: $color-primary-dark;
+            }
+        }
+    }
+
+    // 底部操作栏：主 : 次 = 1.65 : 1（黄金比），主按钮在视觉重量上明显压过次按钮。
+    // 原来的 1:1 等宽 + 999rpx 胶囊，在卡片内部读起来就是「两根一样长的扁香肠」，
+    // 既没有主次，也让卡片的方角外框托不住这两个圆头。
+    .routeActions {
+        display: flex;
+        gap: $spacing-md;
+        align-items: center;
+
+        // 共用几何：高度 88rpx（44px）是「28rpx 字不顶边框」的下限；
+        // 圆角 20rpx 与外层卡片 24rpx 呼应。
+        // 不做参考稿里的「内缩模切线」：paper-btn-* 已自带外描边 + 顶部受光 + 底部背光，
+        // 44px 高度里再叠一道内框就是 5 条线，放大看像给按钮套了个相框。
+        .viewDetailBtn,
+        .startTourBtn {
+            @include button-reset;
+            height: 88rpx;
+            border-radius: $radius-btn-card;
+            gap: $spacing-sm;
+        }
+
+        .viewDetailBtn {
+            flex: 1;
+            @include paper-btn-oat;
+
+            .detailBtnText {
+                font-size: $font-size-md;
+                color: $color-on-oat;
+                font-weight: $font-weight-semibold;
+                letter-spacing: 2rpx;
+            }
+        }
+
+        .startTourBtn {
+            flex: 1.65;
+            @include paper-btn-sage;
+
+            .startTourBtnText {
+                font-size: $font-size-md;
+                color: $color-on-btn;
+                font-weight: $font-weight-semibold;
+                letter-spacing: 2rpx;
+            }
+        }
+    }
+}

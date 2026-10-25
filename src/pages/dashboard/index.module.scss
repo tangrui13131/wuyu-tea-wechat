@@ -1,0 +1,221 @@
+@use '@/styles/variables.scss' as *;
+
+.dashboardPage {
+    min-height: 100vh;
+    @include paper-surface;
+    padding-bottom: calc(#{$spacing-xl} + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+}
+
+// ---------- 顶部 ----------
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $page-padding $spacing-md;
+    background: $color-bg-card;
+
+    .headerLeft {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .headerTitle {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-primary-dark;
+    }
+
+    .headerSub {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-top: $spacing-xs;
+    }
+
+    .sourceTag {
+        padding: $spacing-xs $spacing-md;
+        border-radius: $radius-round;
+    }
+
+    .sourceLive {
+        background: rgba($color-primary, 0.12);
+    }
+
+    .sourceDemo {
+        background: rgba($color-warning, 0.12);
+    }
+
+    .sourceText {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.sourceLive .sourceText {
+    color: $color-primary;
+}
+
+.sourceDemo .sourceText {
+    color: $color-warning;
+}
+
+.noticeBar {
+    margin: $spacing-sm $page-padding 0;
+    padding: $spacing-sm $spacing-md;
+    background: rgba($color-warning, 0.08);
+    border-radius: $radius-md;
+}
+
+.noticeText {
+    font-size: $font-size-xs;
+    color: $color-warning;
+    line-height: $line-height-normal;
+}
+
+// ---------- 核心指标 ----------
+.metricGrid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: $spacing-md $page-padding 0;
+    justify-content: space-between;
+}
+
+.metricCard {
+    width: 48%;
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg $spacing-md;
+    margin-bottom: $spacing-md;
+    box-sizing: border-box;
+}
+
+.metricValue {
+    font-size: 48rpx;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+}
+
+.metricUnit {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-normal;
+    margin-left: 4rpx;
+}
+
+.metricLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: $spacing-xs;
+}
+
+// ---------- 区块 ----------
+.section {
+    padding: 0 $page-padding;
+    margin-bottom: $spacing-lg;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+}
+
+.sectionTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-right: $spacing-sm;
+}
+
+.sectionTag {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    background: $color-bg-section;
+    padding: 2rpx $spacing-sm;
+    border-radius: $radius-xs;
+}
+
+.card {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+}
+
+// ---------- 预约列表 ----------
+.bookingRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.bookingLeft {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.bookingOrg {
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    font-weight: $font-weight-medium;
+    @include text-ellipsis;
+}
+
+.bookingMeta {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: 4rpx;
+}
+
+.bookingStatus {
+    padding: 4rpx $spacing-sm;
+    border-radius: $radius-sm;
+    margin-left: $spacing-sm;
+    flex-shrink: 0;
+}
+
+.bookingStatusText {
+    font-size: $font-size-xs;
+}
+
+.status_confirmed {
+    background: rgba($color-primary, 0.12);
+}
+
+.status_confirmed .bookingStatusText {
+    color: $color-primary;
+}
+
+.status_pending {
+    background: rgba($color-warning, 0.12);
+}
+
+.status_pending .bookingStatusText {
+    color: $color-warning;
+}
+
+.status_done {
+    background: $color-bg-hover;
+}
+
+.status_done .bookingStatusText {
+    color: $color-text-tertiary;
+}
+
+// ---------- 底部 ----------
+.footer {
+    padding: 0 $page-padding;
+}
+
+.footerText {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    text-align: center;
+}

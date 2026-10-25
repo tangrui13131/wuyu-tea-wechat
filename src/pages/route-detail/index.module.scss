@@ -1,0 +1,518 @@
+@use '@/styles/variables.scss' as *;
+
+.routeDetailPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    @include paper-surface;
+    overflow: hidden;
+}
+
+// ---------- 顶部标题栏 ----------
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $page-padding $spacing-md;
+    background: $color-bg-card;
+    flex-shrink: 0;
+
+    .headerLeft {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .headerTitle {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-primary-dark;
+    }
+
+    .headerSub {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-top: $spacing-xs;
+    }
+
+    .scanBtnInline {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        margin-top: $spacing-sm;
+        padding: 10rpx 20rpx;
+        background: rgba($color-primary, 0.1);
+        border-radius: 999rpx;
+    }
+
+    .scanBtnIcon {
+        font-size: $font-size-md;
+        margin-right: 8rpx;
+    }
+
+    .scanBtnText {
+        font-size: $font-size-xs;
+        color: $color-primary-dark;
+        font-weight: $font-weight-medium;
+    }
+
+    .modeSwitch {
+        display: flex;
+        background: $color-bg-section;
+        border-radius: $radius-round;
+        padding: 4rpx;
+    }
+
+    .modeBtn {
+        padding: $spacing-xs $spacing-md;
+        border-radius: $radius-round;
+    }
+
+    .modeBtnActive {
+        background: $color-primary;
+    }
+
+    .modeText {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+    }
+
+    .modeTextActive {
+        font-size: $font-size-sm;
+        color: $color-text-white;
+        font-weight: $font-weight-medium;
+    }
+}
+
+// ---------- 定位状态条 ----------
+.locationBar {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm $page-padding;
+    background: $color-bg-section;
+    flex-shrink: 0;
+
+    .locationIcon {
+        font-size: $font-size-sm;
+        margin-right: $spacing-xs;
+    }
+
+    .locationText {
+        flex: 1;
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+    }
+
+    .relocateBtn {
+        padding: 4rpx $spacing-sm;
+        border: 1rpx solid $color-primary;
+        border-radius: $radius-round;
+    }
+
+    .relocateText {
+        font-size: $font-size-xs;
+        color: $color-primary;
+    }
+}
+
+// ---------- 地图区 ----------
+.mapWrapper {
+    flex: 1;
+    min-height: 420rpx;
+    width: 100%;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+// ---------- 列表面 ----------
+.listWrapper {
+    flex: 1;
+    min-height: 420rpx;
+    padding: $spacing-md $page-padding;
+    box-sizing: border-box;
+}
+
+.sceneItem {
+    display: flex;
+    padding: $spacing-md;
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-sm;
+    border: 2rpx solid transparent;
+}
+
+.sceneItemActive {
+    border-color: $color-primary;
+}
+
+.sceneIcon {
+    width: 88rpx;
+    height: 88rpx;
+    border-radius: $radius-md;
+    @include flex-center;
+    margin-right: $spacing-md;
+    flex-shrink: 0;
+}
+
+.sceneIconText {
+    font-size: 40rpx;
+}
+
+.sceneInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sceneNameRow {
+    display: flex;
+    align-items: center;
+}
+
+.sceneName {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-right: $spacing-xs;
+}
+
+.unlockTag {
+    font-size: $font-size-xs;
+    color: $color-primary;
+    background: $color-route-tag;
+    padding: 2rpx $spacing-xs;
+    border-radius: $radius-xs;
+}
+
+.sceneSummary {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    margin-top: 4rpx;
+    @include text-ellipsis;
+}
+
+.sceneMeta {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: 6rpx;
+}
+
+// ---------- 底部详情卡 ----------
+.detailCard {
+    background: $color-bg-card;
+    border-radius: $radius-xl $radius-xl 0 0;
+    box-shadow: $shadow-popup;
+    padding: $spacing-lg $page-padding calc(#{$spacing-lg} + env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    max-height: 520rpx;
+    overflow-y: auto;
+}
+
+.detailHeader {
+    margin-bottom: $spacing-sm;
+
+    .detailTitleRow {
+        display: flex;
+        align-items: center;
+    }
+
+    .detailName {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-text-primary;
+        margin-right: $spacing-sm;
+    }
+
+    .categoryTag {
+        padding: 2rpx $spacing-sm;
+        border-radius: $radius-xs;
+    }
+
+    .categoryText {
+        font-size: $font-size-xs;
+        color: $color-text-white;
+    }
+
+    .detailMetaRow {
+        display: flex;
+        margin-top: $spacing-xs;
+    }
+
+    .detailMeta {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-right: $spacing-xs;
+    }
+
+    .detailMetaNear {
+        color: $color-primary;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.detailDesc {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: $line-height-loose;
+    margin-bottom: $spacing-md;
+}
+
+.highlightRow {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-sm;
+}
+
+.highlightTag {
+    background: $color-bg-section;
+    border-radius: $radius-sm;
+    padding: 4rpx $spacing-sm;
+    margin-right: $spacing-xs;
+    margin-bottom: $spacing-xs;
+}
+
+.highlightText {
+    font-size: $font-size-xs;
+    color: $color-primary-dark;
+}
+
+.tipsRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 8rpx;
+    margin-bottom: $spacing-md;
+}
+
+.tipsText {
+    font-size: $font-size-xs;
+    color: $color-accent-text;
+}
+
+.actionRow {
+    display: flex;
+}
+
+.voiceBtn {
+    flex: 1;
+    height: $button-height-md;
+    border-radius: $radius-button;
+    box-sizing: border-box;
+    @include flex-center;
+    @include button-reset;
+    margin-right: $spacing-md;
+    @include paper-btn-oat;
+}
+
+.voiceBtnActive {
+    @include paper-btn-sage;
+}
+
+.voiceBtnText {
+    font-size: $font-size-sm;
+    color: $color-on-oat;
+    font-weight: $font-weight-medium;
+}
+
+.voiceBtnActive .voiceBtnText {
+    color: $color-on-btn;
+}
+
+.chatBtn {
+    flex: 1;
+    height: $button-height-md;
+    border-radius: $radius-button;
+    @include flex-center;
+    @include button-reset;
+    @include paper-btn-sage;
+}
+
+.chatBtnText {
+    font-size: $font-size-md;
+    color: $color-on-btn;
+    font-weight: $font-weight-semibold;
+}
+
+.checkinBtn {
+    flex: 1;
+    height: $button-height-md;
+    border-radius: $radius-button;
+    box-sizing: border-box;
+    @include flex-center;
+    @include button-reset;
+    margin-right: $spacing-md;
+    @include paper-btn-oat;
+}
+
+.checkinBtnDone {
+    background: rgba($color-primary, 0.12);
+    border-color: $color-success;
+}
+
+.checkinBtnText {
+    font-size: $font-size-sm;
+    color: $color-accent-text;
+    font-weight: $font-weight-medium;
+}
+
+.checkinBtnDone .checkinBtnText {
+    color: $color-success;
+}
+
+/* 打卡成功浮层 */
+.checkinMask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.55);
+    @include flex-center;
+    z-index: $z-overlay;
+    padding: $spacing-lg;
+}
+
+.checkinCard {
+    width: 100%;
+    max-width: 560rpx;
+    background: $color-text-white;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-popup;
+}
+
+.checkinCardHeader {
+    padding: $spacing-lg;
+    @include flex-center;
+    flex-direction: column;
+}
+
+.checkinCardEmoji {
+    font-size: 80rpx;
+    line-height: 1;
+    margin-bottom: $spacing-sm;
+}
+
+.checkinCardTitle {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-white;
+    text-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+}
+
+.checkinCardBody {
+    padding: $spacing-lg;
+    @include flex-center;
+    flex-direction: column;
+}
+
+.checkinSceneName {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+}
+
+.checkinMeta {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-sm;
+}
+
+.checkinTip {
+    font-size: $font-size-xs;
+    color: $color-accent-text;
+    text-align: center;
+    margin-bottom: $spacing-md;
+}
+
+.checkinShareBtn {
+    width: 100%;
+    border-radius: $radius-button;
+    @include button-reset;
+    margin-bottom: $spacing-sm;
+    @include paper-btn-sage;
+}
+
+.checkinShareText {
+    font-size: $font-size-md;
+    color: $color-text-white;
+    font-weight: $font-weight-semibold;
+}
+
+.checkinCloseBtn {
+    padding: $spacing-sm;
+    @include flex-center;
+    @include button-reset;
+    @include paper-btn-oat;
+}
+
+.checkinCloseText {
+    font-size: $font-size-sm;
+    color: $color-on-oat;
+}
+
+// ---------- 游览模式横幅（从路线「开始游览」进入） ----------
+.tourBar {
+    display: flex;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    background: linear-gradient(135deg, $color-primary-light 0%, $color-primary 100%);
+}
+
+.tourEmojiBox {
+    width: 56rpx;
+    height: 56rpx;
+    border-radius: $radius-circle;
+    background: rgba(255, 255, 255, 0.22);
+    @include flex-center;
+    margin-right: $spacing-sm;
+}
+
+.tourEmoji {
+    font-size: 30rpx;
+}
+
+.tourTextCol {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tourTitle {
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-white;
+}
+
+.tourSub {
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 2rpx;
+}
+
+.tourExit {
+    padding: $spacing-xs $spacing-sm;
+    border: 1rpx solid rgba(255, 255, 255, 0.6);
+    border-radius: $radius-button;
+}
+
+.tourExitText {
+    font-size: $font-size-xs;
+    color: $color-text-white;
+}
+
+// 路线站点序号徽标
+.stopBadge {
+    flex-shrink: 0;
+    padding: 0 10rpx;
+    height: 32rpx;
+    line-height: 32rpx;
+    font-size: $font-size-xs;
+    color: $color-text-white;
+    background: $color-primary;
+    border-radius: 16rpx;
+    margin-right: $spacing-xs;
+}

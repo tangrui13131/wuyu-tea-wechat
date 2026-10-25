@@ -1,0 +1,223 @@
+@use '@/styles/variables.scss' as *;
+
+/* ============================================
+ * 研学主题卡 —— 2026-10 审美升级
+ * 对标设计稿「研学卡片审美升级设计」，结构自上而下：
+ *   顶部主题色带（副题 + 状态印章 + 大字水印）→ 下沿双线 →
+ *   卡纸内容区（宋体标题 + NPC 徽章 + 简介）→ 虚线 → 进度区
+ * 三套主题色（春辰绿 / 秋香 / 茜草红）来自 variables.scss 的 $study-* 令牌，
+ * 由 .theme-tea / .theme-farm / .theme-red 三个修饰类选中，别在本文件里写死色值。
+ *
+ * 本文件是**普通 scss（全局类名）**，所有选择器都收在 .research-card 下，
+ * 避免与 study-detail / study-task 的 .npc-name 等同名类互相污染。
+ * ============================================ */
+
+/* 一套主题色作用到色带、NPC 徽章、进度条与完成印章上 */
+@mixin study-tone($banner, $ink, $bar) {
+    .card-banner {
+        background: $banner;
+        color: $ink; // 水印与副题跟着走 currentColor
+    }
+
+    .npc-badge {
+        background-color: rgba($ink, 0.06);
+        border-color: rgba($ink, 0.15);
+    }
+
+    .npc-name {
+        color: $ink;
+    }
+
+    .progress-bar {
+        background-color: $bar;
+    }
+
+    /* 已完成的印章：墨色实底 + 纸白字，像真的盖上去 */
+    .status-stamp.completed {
+        background-color: $ink;
+        border-color: $ink;
+        color: $color-text-white;
+    }
+}
+
+.research-card {
+    position: relative;
+    /* 交给列表容器 .themeList 管左右边距，卡只管自己的下边距 */
+    margin: 0 0 $spacing-lg;
+    border-radius: $radius-xl; // 32rpx = 设计稿 16px
+    background: $study-paper; // 纸底而非纯白（设计稿：告别刺眼纯白）
+    overflow: hidden;
+    box-shadow: $study-shadow-card;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    /* 触屏没有 hover，把设计稿的「抬起 + 投影加深」翻译成按下态，
+       保证 150ms 内有可见反馈（§11 验收清单） */
+    &:active {
+        transform: translateY(-6rpx);
+        box-shadow: $study-shadow-card-lift;
+        transition-duration: 0.18s;
+    }
+
+    /* ---------- 顶部主题色带 ---------- */
+    .card-banner {
+        position: relative;
+        height: 184rpx;
+        padding: 40rpx 44rpx;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        overflow: hidden;
+        /* 设计稿的 3px 双线分隔；6rpx 以下 double 画不出两条线 */
+        border-bottom: 6rpx double rgba($study-edge-strong, 0.18);
+    }
+
+    /* 副题：宋体 + 宽字距，前置一小段横线 */
+    .banner-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 16rpx;
+        margin-top: 8rpx;
+        font-family: $font-family-seal;
+        font-size: 24rpx;
+        letter-spacing: 4rpx;
+        opacity: 0.75;
+    }
+
+    .subtitle-rule {
+        flex-shrink: 0;
+        width: 32rpx;
+        height: 2rpx;
+        background: currentColor;
+    }
+
+    /* 状态印章：描边小签，文字与描边同用主题墨色 */
+    .status-stamp {
+        position: relative;
+        z-index: 2;
+        padding: 6rpx 20rpx;
+        border: 2rpx solid currentColor;
+        border-radius: 8rpx;
+        background-color: rgba(255, 255, 255, 0.45);
+        font-family: $font-family-seal;
+        font-size: 24rpx;
+        line-height: 1.5;
+        letter-spacing: 2rpx;
+    }
+
+    /* 右下角大字水印（茶 / 耕 / 红）：径向渐变蒙版做「墨色晕开」的淡出。
+       蒙版在个别内核上不生效时退化成整字 12% 透明，观感仍然成立。 */
+    .watermark-char {
+        position: absolute;
+        right: 28rpx;
+        bottom: -44rpx;
+        font-family: $font-family-seal;
+        font-size: 192rpx;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0;
+        opacity: 0.12;
+        pointer-events: none;
+        -webkit-mask-image: radial-gradient(circle at 30% 30%, #000 60%, transparent 100%);
+        mask-image: radial-gradient(circle at 30% 30%, #000 60%, transparent 100%);
+    }
+
+    /* ---------- 下半部分内容区 ---------- */
+    .card-body {
+        padding: 40rpx 44rpx 44rpx;
+    }
+
+    .card-title {
+        display: block;
+        margin-bottom: 24rpx;
+        font-family: $font-family-seal;
+        font-size: 42rpx;
+        font-weight: 700;
+        line-height: 1.35;
+        letter-spacing: 2rpx;
+        color: $color-text-primary;
+    }
+
+    /* NPC 徽章：微章化的小胶囊（设计稿 npc-badge） */
+    .npc-badge {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 24rpx;
+        padding: 8rpx 20rpx;
+        border: 2rpx solid;
+        border-radius: 12rpx;
+    }
+
+    .npc-label {
+        margin-right: 12rpx;
+        font-size: 24rpx;
+        color: $color-text-tertiary;
+    }
+
+    .npc-name {
+        font-family: $font-family-seal;
+        font-size: 26rpx;
+        font-weight: 600;
+    }
+
+    .card-desc {
+        display: block;
+        margin-bottom: 40rpx;
+        font-size: 28rpx;
+        line-height: 1.6;
+        letter-spacing: 1rpx;
+        color: $color-text-secondary;
+    }
+
+    /* ---------- 进度区（虚线分隔） ---------- */
+    .progress-section {
+        padding-top: 28rpx;
+        border-top: 2rpx dashed rgba($study-edge, 0.25);
+    }
+
+    .progress-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16rpx;
+        font-size: 24rpx;
+        color: $color-text-tertiary;
+    }
+
+    .progress-count {
+        font-family: $font-family-seal;
+        font-size: 24rpx;
+        font-weight: 600;
+        color: $color-text-secondary;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 14rpx;
+        overflow: hidden;
+        border-radius: $radius-button;
+        background-color: $study-track;
+        /* 内凹阴影 + 顶部一道白，让进度槽像嵌进纸里 */
+        box-shadow:
+            inset 0 2rpx 4rpx rgba($study-shadow-ink, 0.2),
+            0 2rpx 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .progress-bar {
+        height: 100%;
+        border-radius: $radius-button;
+        transition: width 0.4s ease;
+    }
+
+    /* ---------- 三套主题色 ---------- */
+    &.theme-tea {
+        @include study-tone($study-tea-banner, $study-tea-ink, $study-tea-bar);
+    }
+
+    &.theme-farm {
+        @include study-tone($study-farm-banner, $study-farm-ink, $study-farm-bar);
+    }
+
+    &.theme-red {
+        @include study-tone($study-red-banner, $study-red-ink, $study-red-bar);
+    }
+}

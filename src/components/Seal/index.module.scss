@@ -1,0 +1,52 @@
+@use '@/styles/variables.scss' as *;
+@use '@/styles/textures.scss' as tex;
+
+/* 印章：方寸之间要有「纸、墨、朱」三种质感，所以是三层叠出来的
+   底层印泥红 / 中层刻字 / 顶层颗粒（复用宣纸纹理做印泥不匀）。
+   字号用系统宋体栈（$font-family-seal），不加载字体文件。 */
+.seal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4rpx;
+}
+
+/* 白文印：红底白字（阴刻），最像公章，远看是一块红 */
+.yin {
+    background: $color-seal;
+    box-shadow: inset 0 0 0 1rpx rgba(255, 255, 255, 0.22);
+}
+
+/* 朱文印：白底红字 + 红框（阳刻），更雅、更适合放在浅色页面上 */
+.yang {
+    background: transparent;
+    border: 3rpx solid $color-seal;
+}
+
+.char {
+    color: #fff;
+    font-family: $font-family-seal;
+    font-weight: $font-weight-semibold;
+    line-height: 1.04;
+    text-align: center;
+}
+
+.yang .char {
+    color: $color-seal;
+}
+
+/* 印泥颗粒：只压一层低透明纹理，不做混合模式（小程序对 mix-blend-mode 支持不稳） */
+.grain {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: tex.$texture-paper;
+    background-repeat: repeat;
+    opacity: 0.55;
+    pointer-events: none;
+}

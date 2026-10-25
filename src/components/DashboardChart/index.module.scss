@@ -1,0 +1,145 @@
+@use '@/styles/variables.scss' as *;
+
+.empty {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    padding: $spacing-md 0;
+    text-align: center;
+}
+
+// ---------- 竖向柱状 ----------
+.barChart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: $spacing-sm;
+}
+
+.barGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 4rpx;
+}
+
+.barValue {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-xs;
+}
+
+.barTrack {
+    width: 100%;
+    height: 160rpx;
+    background: $color-bg-section;
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.barFill {
+    width: 100%;
+    border-radius: $radius-sm;
+    transition: height $transition-base;
+}
+
+.barLabel {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-top: $spacing-xs;
+}
+
+// ---------- 横向条形 ----------
+.hbarChart {
+    display: flex;
+    flex-direction: column;
+}
+
+.hbarRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.hbarLabel {
+    width: 180rpx;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    flex-shrink: 0;
+    @include text-ellipsis;
+}
+
+.hbarTrack {
+    flex: 1;
+    height: 24rpx;
+    background: $color-bg-section;
+    border-radius: $radius-round;
+    overflow: hidden;
+    margin: 0 $spacing-sm;
+}
+
+.hbarFill {
+    height: 100%;
+    border-radius: $radius-round;
+    transition: width $transition-slow;
+}
+
+.hbarValue {
+    width: 90rpx;
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+    font-weight: $font-weight-medium;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+// ---------- 占比横条 ----------
+.ratioChart {
+    display: flex;
+    flex-direction: column;
+}
+
+.ratioRow {
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.ratioHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+}
+
+.ratioLabel {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+}
+
+.ratioPercent {
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+    font-weight: $font-weight-semibold;
+}
+
+.ratioTrack {
+    height: 16rpx;
+    background: $color-bg-section;
+    border-radius: $radius-round;
+    overflow: hidden;
+}
+
+.ratioFill {
+    height: 100%;
+    border-radius: $radius-round;
+    transition: width $transition-slow;
+}

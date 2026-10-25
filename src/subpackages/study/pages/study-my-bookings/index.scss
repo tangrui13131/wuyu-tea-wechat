@@ -1,0 +1,47 @@
+@use '@/styles/variables.scss' as *;
+
+.mb-page { @include paper-surface; min-height: 100vh; padding: 30rpx; padding-bottom: 40rpx; }
+.mb-header { padding: 10rpx 0 24rpx; }
+.mb-title { display: block; font-size: 40rpx; font-weight: bold; color: $color-text-primary; }
+.mb-sub { display: block; font-size: 24rpx; color: $color-text-tertiary; margin-top: 6rpx; }
+
+.empty { text-align: center; padding: 100rpx 0; }
+.empty-text { display: block; font-size: 28rpx; color: $color-text-tertiary; margin-bottom: 30rpx; }
+.empty-btn {
+    display: inline-block;
+    border-radius: $radius-button;
+    height: 76rpx;
+    line-height: 76rpx;
+    padding: 0 50rpx;
+    @include button-reset;
+    @include paper-btn-sage;
+
+    Text {
+        font-size: $font-size-md;
+    }
+}
+
+.mb-card { background: $color-text-white; border-radius: 20rpx; padding: 28rpx; margin-bottom: 24rpx; border: 1rpx solid $color-border-light; }
+.mb-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16rpx; }
+.mb-name { font-size: 32rpx; font-weight: bold; color: $color-text-primary; flex: 1; }
+.mb-status { font-size: 24rpx; padding: 6rpx 18rpx; border-radius: 20rpx; }
+.mb-row { display: flex; padding: 10rpx 0; }
+.mb-label { font-size: 26rpx; color: $color-text-tertiary; width: 120rpx; }
+.mb-val { font-size: 26rpx; color: $color-text-primary; flex: 1; }
+.mb-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16rpx; padding-top: 16rpx; border-top: 2rpx solid $color-border-light; }
+.mb-code { font-size: 24rpx; color: $color-text-tertiary; }
+.mb-cancel {
+    margin: 0;
+    background: $color-btn-oat;
+    border: 1rpx solid $color-btn-oat-deep;
+    border-radius: 28rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding: 0 28rpx;
+    @include button-reset;
+
+    Text {
+        font-size: $font-size-xs;
+        color: $color-error;
+    }
+}

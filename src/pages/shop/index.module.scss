@@ -1,0 +1,239 @@
+@use '@/styles/variables.scss' as *;
+
+.shopPage {
+    padding: $spacing-lg $page-padding;
+}
+
+.header {
+    margin-bottom: $spacing-lg;
+    padding: $spacing-xl $spacing-lg;
+    background: $gradient-hero;
+    border-radius: $radius-lg;
+
+    .headerTitle {
+        display: block;
+        font-size: $font-size-xxl;
+        font-weight: $font-weight-bold;
+        color: $color-text-white;
+        margin-bottom: $spacing-xs;
+    }
+
+    .headerDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-on-dark;
+    }
+}
+
+.catBar {
+    white-space: nowrap;
+    margin-bottom: $spacing-md;
+}
+
+.catItem {
+    display: inline-block;
+    padding: $spacing-xs $spacing-lg;
+    margin-right: $spacing-sm;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    @include paper-surface;
+    border-radius: $radius-xl;
+}
+
+.catActive {
+    background: $color-primary;
+    color: $color-text-white;
+    font-weight: $font-weight-semibold;
+}
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    width: 48%;
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    overflow: hidden;
+    margin-bottom: $spacing-md;
+}
+
+.cardImg {
+    width: 100%;
+    height: 200rpx;
+    // 无真实图片时作为渐变占位容器，需居中显示 emoji
+    @include flex-center;
+}
+
+.cardEmoji {
+    font-size: 64rpx;
+}
+
+.cardName {
+    display: block;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    padding: $spacing-sm $spacing-sm 0;
+}
+
+.cardDesc {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    padding: $spacing-xs $spacing-sm;
+    line-height: $line-height-normal;
+}
+
+.cardPrice {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-error;
+    font-weight: $font-weight-bold;
+    padding: 0 $spacing-sm $spacing-sm;
+}
+
+.unit {
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    font-weight: $font-weight-normal;
+}
+
+.detailCard {
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+}
+
+.detailImg {
+    width: 100%;
+    height: 400rpx;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-md;
+    @include flex-center;
+}
+
+.detailEmoji {
+    font-size: 120rpx;
+}
+
+.detailName {
+    display: block;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+}
+
+.detailPrice {
+    display: block;
+    font-size: $font-size-xl;
+    color: $color-error;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-md;
+}
+
+.detailDesc {
+    display: block;
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+    line-height: $line-height-loose;
+}
+
+.backBtn {
+    border-radius: $radius-button;
+    @include button-reset;
+    margin-top: $spacing-lg;
+    @include paper-btn-oat;
+}
+
+.traceBtn {
+    border-radius: $radius-button;
+    @include button-reset;
+    margin-top: $spacing-md;
+    @include paper-btn-sage;
+}
+
+.contactCard {
+    background: $color-bg-card;
+    border: 1rpx solid $color-gold-line-strong;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+}
+
+// 标题与说明都是 <Text>（inline），不加 display:block 会粘成一行
+.contactTitle {
+    display: block;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+}
+
+.contactTip {
+    display: block;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.7;
+    margin-bottom: $spacing-md;
+}
+
+.qrcode {
+    width: 300rpx;
+    height: 300rpx;
+    align-self: center;
+    margin-bottom: $spacing-md;
+}
+
+/* 卡纸主按钮：材质规则见 variables.scss 的 paper-btn-* */
+.copyBtn {
+    width: 100%;
+    height: $button-height-lg;
+    border-radius: $radius-button;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    letter-spacing: 2rpx;
+    text-shadow: 0 1rpx 0 rgba(0, 0, 0, 0.18); // 极轻压印，双向 1px 会糊边
+    @include button-reset;
+    @include paper-btn-sage;
+}
+
+.btnPress {
+    @include paper-btn-press;
+}
+
+.contactNote {
+    display: block;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    margin-top: $spacing-md;
+    text-align: center;
+}
+
+.empty {
+    width: 100%;
+    padding: $spacing-xl 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emptyImg {
+    width: 240rpx;
+    height: 180rpx;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-md;
+    opacity: 0.9;
+}
+
+.emptyText {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+}

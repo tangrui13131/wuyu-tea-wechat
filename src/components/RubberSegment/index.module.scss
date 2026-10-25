@@ -1,0 +1,51 @@
+@use '@/styles/variables.scss' as *;
+
+// 胶囊分段选择器：一条底槽 + 一个会滑动的白色滑块（回弹缓动）
+.segment {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 6rpx;
+    background-color: $color-bg-section;
+    border-radius: $radius-round;
+    border: 1rpx solid $color-border-light;
+    // 裁掉滑块两端的直角，避免在大圆角底槽里露出方角
+    overflow: hidden;
+}
+
+.slider {
+    position: absolute;
+    top: 6rpx;
+    bottom: 6rpx;
+    left: 6rpx;
+    // 宽度 = 内槽宽度 / 选项数；用 CSS 变量传 count，避免 inline style 里的 rpx 在 H5 端失效
+    width: calc((100% - 12rpx) / var(--seg-count, 2));
+    background-color: $color-bg-card;
+    border-radius: $radius-round;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+    // 回弹缓动：末段略冲过头再回位，手感接近 iOS 分段控件
+    transition: transform 0.32s cubic-bezier(0.34, 1.28, 0.64, 1);
+    will-change: transform;
+}
+
+.item {
+    position: relative;
+    z-index: $z-base;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80rpx; // 40px，向移动端 44px 触控下限靠，避免小屏误触
+    border-radius: $radius-round;
+    transition: color 0.2s ease;
+
+    .label {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+    }
+
+    &.itemActive .label {
+        color: $color-primary;
+        font-weight: $font-weight-semibold;
+    }
+}

@@ -1,0 +1,219 @@
+@use '@/styles/variables.scss' as *;
+
+.npc-page {
+  animation: fadeIn 0.5s ease both;
+    min-height: 100vh;
+    @include paper-surface;
+    padding-bottom: 40rpx;
+}
+
+.npc-header {
+    position: relative;
+    padding: 64rpx 32rpx 72rpx;
+    /* 兜底底色 + 实拍底图（见 .npc-hero-bg）：色块换成照片后，
+       这块「没有信息的大绿框」变成了近景茶园，和首页那张远景互为呼应 */
+    background: $color-primary-dark;
+    color: $color-text-white;
+    border-radius: 0 0 44rpx 44rpx;
+    overflow: hidden;
+
+    /* 内容层抬到图片与 scrim 之上 */
+    .npc-header-inner {
+        position: relative;
+        z-index: $z-raised;
+    }
+
+    .npc-header-top {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16rpx;
+    }
+
+    /* 左栏必须能收缩：右侧「一键解锁」按钮是固定宽度的兄弟节点，
+       左栏不给 min-width:0 就会被内容撑开，胶囊里的文字被迫换行后跑出圆角 */
+    .npc-header-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .npc-title {
+        font-size: 40rpx;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 16rpx;
+    }
+
+    .npc-subtitle {
+        font-size: 26rpx;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    /* 主操作：实拍底图上用燕麦纸片（暗照片上唯一的亮块，一眼看到），
+       右上角「体验：一键解锁」改用玻璃胶囊后退，主次一眼分得清。
+       早期两个按钮都是同一块米色纸，既没层级又像贴上去的两张卡片 */
+    .npc-scan-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 10rpx 22rpx;
+        border-radius: $radius-round;
+        white-space: nowrap;
+        max-width: 100%;
+        box-sizing: border-box;
+        @include button-reset;
+        margin-top: 20rpx;
+        @include paper-btn-oat;
+
+        .npc-scan-text {
+            color: $color-on-oat;
+        }
+    }
+
+    .npc-scan-icon {
+        margin-right: 10rpx;
+    }
+
+    .npc-scan-text {
+        font-size: 24rpx;
+        font-weight: 500;
+        letter-spacing: 1rpx;
+    }
+
+    /* 小程序的 <Button> 默认是块级、宽度撑满父级 —— 放在 flex 行里会占满整行，
+       把左侧文案挤成一列竖排的字。必须显式改成「按内容宽度的胶囊」 */
+    .demo-unlock-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 240rpx;
+        margin: 0;
+        padding: 0 24rpx;
+        height: 64rpx;
+        line-height: 1;
+        border-radius: $radius-button;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        white-space: nowrap;
+        @include button-reset;
+        /* 次操作：玻璃胶囊。原来和「扫码验真」同为燕麦卡纸，两块米色并排
+           既没有主次、又和深绿实拍脱节（米色像贴上去的纸片） */
+        @include glass-pill;
+    }
+}
+
+/* 实拍底图：小程序 wxss 的 background-image 不吃本地相对路径，
+   只能用绝对定位的 <Image mode="aspectFill"> 铺满 header。 */
+.npc-hero-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 近景叶细节多、明暗跳，scrim 比首页更实：
+   顶部 .78 压住标题行，中段 .52 保证副标题不落在高光叶上，底部 .9 收进页面底色 */
+.npc-hero-scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        rgba(12, 20, 15, 0.74) 0%,
+        rgba(12, 20, 15, 0.44) 50%,
+        rgba(12, 20, 15, 0.9) 100%
+    );
+}
+
+// 园区打卡面板样式（GPS 到达触发，当前版本手动选择位置）
+.checkin-panel {
+    margin: 24rpx 32rpx;
+    background: $color-text-white;
+    border-radius: 16rpx;
+    padding: 24rpx;
+
+    .checkin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20rpx;
+
+        .checkin-title {
+            font-size: 30rpx;
+            font-weight: 600;
+            color: $color-text-primary;
+        }
+    }
+
+    .checkin-locations {
+        .checkin-locations-title {
+            font-size: 26rpx;
+            color: $color-text-secondary;
+            display: block;
+            margin-bottom: 16rpx;
+        }
+
+        /* 三个景点按钮原本是深绿实心块，一屏三块深绿比页头还重。
+           现在按「列表行」处理：白底 + 发丝线 + 左对齐 + 右侧箭头，
+           和页面里其他可点行保持同一种长相，而不是像输入框 */
+        .checkin-location-btn {
+            position: relative;
+            width: 100%;
+            height: 88rpx;
+            line-height: 88rpx;
+            padding: 0 $spacing-md;
+            padding-right: 44rpx;
+            background: $color-bg-card;
+            color: $color-text-primary;
+            border-radius: $radius-sm;
+            font-size: 26rpx;
+            text-align: left;
+            margin-bottom: 12rpx;
+            border: 1rpx solid $color-border;
+
+            &::after {
+                /* 用字形箭头而不是 border 拼的斜角：小尺寸下两个 border 会糊成菱形。
+                   button::after 默认带 left:0，必须显式 left:auto 才落到右边 */
+                content: '›';
+                position: absolute;
+                left: auto;
+                right: 20rpx;
+                top: 0;
+                bottom: 0;
+                width: auto;
+                height: auto;
+                border: none;
+                background: transparent;
+                font-size: 34rpx;
+                line-height: 88rpx;
+                color: $color-text-tertiary;
+            }
+
+            &:active {
+                background: $color-bg-hover;
+            }
+        }
+
+        .checkin-reset-btn {
+            width: 100%;
+            height: 80rpx;
+            line-height: 80rpx;
+            border-radius: 12rpx;
+            font-size: 26rpx;
+            @include button-reset;
+            margin-top: 8rpx;
+            @include paper-btn-oat;
+        }
+    }
+}
+
+.npc-list {
+    padding: 0 32rpx;
+}

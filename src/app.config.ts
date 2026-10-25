@@ -1,0 +1,99 @@
+export default defineAppConfig({
+  pages: [
+    'pages/home/index',
+    'pages/npc/index',
+    'pages/study/index',
+    'pages/quality/index',
+    'pages/mine/index',
+    'pages/route-detail/index',
+    'pages/npc-chat/index',
+    'pages/task-detail/index',
+    'pages/report/index',
+    'pages/shop/index',
+    'pages/trace/index',
+    'pages/dashboard/index',
+    'pages/ranking/index'
+  ],
+  // 研学模块拆分包：这 6 个页面不参与首屏，放进分包后主包省出 JS/WXSS 体积。
+  // 注意：tabBar 页 pages/study 必须留在主包，不能移进分包。
+  subPackages: [
+    {
+      root: 'subpackages/study',
+      pages: [
+        'pages/study-detail/index',
+        'pages/study-task/index',
+        'pages/study-courses/index',
+        'pages/study-course-detail/index',
+        'pages/study-booking/index',
+        'pages/study-my-bookings/index'
+      ]
+    }
+  ],
+  window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#4A7C59',
+    navigationBarTitleText: '槎山智慧文旅',
+    navigationBarTextStyle: 'white'
+  },
+  tabBar: {
+    color: '#86909C',
+    selectedColor: '#4A7C59',
+    backgroundColor: '#FFFFFF',
+    borderStyle: 'black',
+    list: [
+      {
+        pagePath: 'pages/home/index',
+        text: '首页',
+        iconPath: 'assets/tabbar/home.png',
+        selectedIconPath: 'assets/tabbar/home-active.png'
+      },
+      {
+        pagePath: 'pages/npc/index',
+        text: 'NPC 互动',
+        iconPath: 'assets/tabbar/npc.png',
+        selectedIconPath: 'assets/tabbar/npc-active.png'
+      },
+      {
+        pagePath: 'pages/study/index',
+        text: '研学任务',
+        iconPath: 'assets/tabbar/study.png',
+        selectedIconPath: 'assets/tabbar/study-active.png'
+      },
+      {
+        pagePath: 'pages/quality/index',
+        text: '品质展示',
+        iconPath: 'assets/tabbar/quality.png',
+        selectedIconPath: 'assets/tabbar/quality-active.png'
+      },
+      {
+        pagePath: 'pages/mine/index',
+        text: '我的',
+        iconPath: 'assets/tabbar/mine.png',
+        selectedIconPath: 'assets/tabbar/mine-active.png'
+      }
+    ]
+  },
+  // 微信同声传译插件：暂不在此处声明。微信开发者工具的模拟器不允许加载任何
+  // 第三方 appid 插件（会报"登录用户不是该小程序的开发者"并导致模拟器启动失败），
+  // 必须真机预览才能验证第三方插件功能。utils/tts.ts 已完整实现 TTS 调用与降级
+  // 逻辑，待真机测试前再恢复下方的 plugins 声明。
+  // plugins: {
+  //   WechatSI: {
+  //     version: '0.3.5',
+  //     provider: 'wx069ba97219f66d99'
+  //   }
+  // },
+  // 声明需要使用的位置相关 API
+  requiredPrivateInfos: [
+    'getLocation',
+    'onLocationChange',
+    'startLocationUpdate',
+    'startLocationUpdateBackground'
+  ],
+  // 位置权限声明
+  permission: {
+    'scope.userLocation': {
+      desc: '需要在景区内定位，以便在到达景点时自动触发 NPC 对话'
+    }
+  }
+})

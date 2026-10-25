@@ -1,0 +1,236 @@
+@use '@/styles/variables.scss' as *;
+
+.minePage {
+    padding: $spacing-lg $page-padding;
+}
+
+.profileSection {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    /* 宣纸卡：白底 + 极淡金描边。原来这里是绿色渐变块，和首页 hero、研学页头撞成一套「模板」 */
+    background: $color-bg-card;
+    border: 1rpx solid $color-gold-line-strong;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-xl;
+
+    .avatar {
+        width: 112rpx;
+        height: 112rpx;
+        border-radius: $radius-round;
+        border: 1rpx solid $color-gold-line-strong;
+        background: $brand-1;
+        box-sizing: border-box;
+        @include flex-center;
+    }
+
+    .avatarText {
+        font-size: 44rpx;
+        font-weight: $font-weight-semibold;
+        color: $color-primary-dark;
+    }
+
+    .nicknameRow {
+    display: flex;
+    align-items: center;
+    gap: 12rpx;
+}
+
+.nicknameBadge {
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: $radius-round;
+}
+
+.userInfo {
+        flex: 1;
+
+        .nickname {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-semibold;
+            color: $color-text-primary;
+            letter-spacing: 1rpx;
+            margin-bottom: $spacing-xs;
+        }
+
+        .visitCount {
+            font-size: $font-size-xs;
+            color: $color-text-tertiary;
+            letter-spacing: 1rpx;
+        }
+    }
+}
+
+.menuSection {
+    margin-bottom: $spacing-xxl;
+
+    .sectionTitle {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-text-primary;
+        margin-bottom: $spacing-md;
+    }
+
+    .sectionTitleRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $spacing-md;
+    }
+
+    .sectionSub {
+        font-size: $font-size-sm;
+        color: $color-primary;
+    }
+
+    .checkinGallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-sm;
+    }
+
+    .checkinCell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-md $spacing-xs;
+        border-radius: $radius-md;
+        background-color: $color-bg-section;
+        border: 2rpx dashed $color-border;
+    }
+
+    .checkinCellDone {
+        border: none;
+        background: $brand-1;
+        border: 1rpx solid $color-gold-line;
+    }
+
+    .checkinCellIcon {
+        /* 图标是块级 View，靠 margin 自动居中对齐到格子上方 */
+        margin: 0 auto 4rpx;
+    }
+
+    .checkinCellName {
+        font-size: $font-size-xs;
+        color: $color-text-secondary;
+        text-align: center;
+    }
+
+    .checkinCellDone .checkinCellName {
+        color: $color-text-white;
+    }
+
+    /* 空态不用整块暖灰（压在米白页面上像一块「禁用区」）：
+       改成宣纸底 + 金色虚线，虚线本身就是空态的通用语义 */
+    .checkinEmpty {
+        padding: $spacing-xl $spacing-lg;
+        background-color: $color-bg-component;
+        border: 1rpx dashed $color-gold-line-strong;
+        border-radius: $radius-md;
+    }
+
+    .checkinEmptyText {
+        /* Text 是 inline：不 block 化时 text-align 不生效，文字会贴左 */
+        display: block;
+        font-size: $font-size-sm;
+        color: $color-text-tertiary;
+        text-align: center;
+        line-height: 1.7;
+    }
+
+    .menuList {
+        background-color: $color-bg-card;
+        border-radius: $radius-lg;
+        overflow: hidden;
+
+        .menuItem {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: $spacing-lg;
+            border-bottom: 1rpx solid $color-border-light;
+            cursor: pointer;
+            transition: all $transition-base;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:active {
+                background-color: $color-bg-hover;
+            }
+
+            .menuLeft {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .menuLabel {
+                font-size: $font-size-md;
+                color: $color-text-primary;
+            }
+
+            .menuDesc {
+                font-size: $font-size-xs;
+                color: $color-text-tertiary;
+                margin-top: 4rpx;
+            }
+
+            .menuArrow {
+                font-size: $font-size-sm;
+                color: $color-text-tertiary;
+                margin-left: $spacing-sm;
+            }
+        }
+    }
+}
+
+.statsCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-xl;
+
+    .statItem {
+        text-align: center;
+
+        .statValue {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: $color-primary;
+            margin-bottom: $spacing-xs;
+        }
+
+        .statLabel {
+            font-size: $font-size-sm;
+            color: $color-text-tertiary;
+        }
+    }
+}
+
+// 数字统计：数值在上、标签在下（数值用 Counter 组件计数动画）
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6rpx;
+}
+
+.statValue {
+    font-size: 46rpx;
+    font-weight: 700;
+    line-height: 1.1;
+    color: $color-primary;
+}
+
+.statLabel {
+    font-size: 22rpx;
+    color: $color-text-secondary;
+}

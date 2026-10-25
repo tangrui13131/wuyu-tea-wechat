@@ -1,0 +1,163 @@
+@use '@/styles/variables.scss' as *;
+
+.npcCard {
+  /* 入场动画由 Reveal 组件统一控制（全局 .anim-* 类），避免 CSS Modules 改写 keyframes 名导致动画失效 */
+    background-color: $color-bg-card;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    margin-bottom: $spacing-lg;
+
+    &.npcCardLocked {
+        opacity: 0.7;
+        filter: grayscale(0.5);
+    }
+
+    .npcHeader {
+        display: flex;
+        align-items: center;
+        padding: $spacing-lg;
+        background: linear-gradient(135deg, $color-npc-bg 0%, $color-bg-card 100%);
+        gap: $spacing-md;
+
+        .npcAvatar {
+            width: 120rpx;
+            height: 120rpx;
+            border-radius: $radius-round;
+            border: 4rpx solid $color-primary;
+        }
+
+        .npcPortrait {
+            flex-shrink: 0;
+            width: 108rpx;
+            height: 144rpx;
+            border-radius: $radius-md;
+        }
+
+        .npcInfo {
+            flex: 1;
+
+            .npcNameRow {
+                display: flex;
+                align-items: center;
+                gap: $spacing-sm;
+                margin-bottom: $spacing-xs;
+            }
+
+            .npcName {
+                display: block;
+                font-size: $font-size-xl;
+                font-weight: $font-weight-semibold;
+                color: $color-text-primary;
+            }
+
+            .npcTitle {
+                display: block;
+                font-size: $font-size-sm;
+                color: $color-primary;
+                font-weight: $font-weight-medium;
+                margin-bottom: $spacing-xs;
+            }
+
+            .lockTip {
+                display: block;
+                font-size: $font-size-xs;
+                color: $color-text-tertiary;
+            }
+
+            .unlockedBadge {
+                padding: $spacing-xs $spacing-sm;
+                background-color: $color-success;
+                border-radius: $radius-xs;
+
+                .unlockedText {
+                    font-size: $font-size-xs;
+                    color: $color-text-white;
+                }
+            }
+        }
+    }
+
+    .npcContent {
+        padding: $spacing-lg;
+    }
+
+    .npcDesc {
+        display: block;
+        font-size: $font-size-md;
+        color: $color-text-secondary;
+        margin-bottom: $spacing-md;
+        @include text-ellipsis-multi(2);
+    }
+
+    .lastMessagePreview {
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-bg-section;
+        border-radius: $radius-sm;
+        margin-bottom: $spacing-md;
+        border-left: 4rpx solid $color-primary;
+
+        .lastMessageLabel {
+            display: block;
+            font-size: $font-size-xs;
+            color: $color-text-tertiary;
+            margin-bottom: $spacing-xs;
+        }
+
+        .lastMessageContent {
+            display: block;
+            font-size: $font-size-sm;
+            color: $color-text-primary;
+            @include text-ellipsis-multi(2);
+        }
+    }
+
+    .npcTags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-md;
+
+        .npcTag {
+            padding: $spacing-xs $spacing-sm;
+            background-color: $color-tea-badge;
+            border-radius: $radius-xs;
+
+            .npcTagText {
+                font-size: $font-size-xs;
+                color: $color-accent-text;
+            }
+        }
+    }
+
+    .npcAction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-sm;
+        background: linear-gradient(135deg, $color-accent 0%, $color-accent-light 100%);
+        border-radius: $radius-button;
+        cursor: pointer;
+        transition: all $transition-base;
+
+        &:active {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        .actionText {
+            font-size: $font-size-md;
+            color: $color-text-white;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    .npcActionLocked {
+        background: linear-gradient(135deg, $color-text-disabled 0%, $color-border 100%);
+        cursor: not-allowed;
+
+        &:active {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}
